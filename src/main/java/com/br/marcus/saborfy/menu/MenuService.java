@@ -23,7 +23,7 @@ public class MenuService {
     public Menu createMenu(CreateMenuRequest request) {
         if (menuRepository.existsByNome(request.getNome())) {
             throw new ConflictException("Já existe um menu com esse nome!");
-        };
+        }
         Menu menu = new Menu();
         menu.setNome(request.getNome());
 

@@ -1,5 +1,8 @@
 package com.br.marcus.saborfy.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ApiErrorDetail {
 
     private String field;
@@ -10,11 +13,4 @@ public class ApiErrorDetail {
         this.message = message;
     }
 
-    public String getField() {
-        return field;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
