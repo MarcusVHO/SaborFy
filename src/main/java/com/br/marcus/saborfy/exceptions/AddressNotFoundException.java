@@ -1,0 +1,6 @@
+package com.br.marcus.saborfy.exceptions;
+
+public class AddressNotFoundException extends RuntimeException {
+    public AddressNotFoundException() {super("Address not found!");}
+    public AddressNotFoundException(String message) {super(message);}
+}
