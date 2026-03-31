@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class ItemMenu {
     @Id
     @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -33,6 +34,12 @@ public class ItemMenu {
     @JsonBackReference
     @JoinColumn(name = "created_by", nullable = false)
     private User user;
+
+    @Setter
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private User latestUpdateBy;
 
     @Setter
     @JsonBackReference

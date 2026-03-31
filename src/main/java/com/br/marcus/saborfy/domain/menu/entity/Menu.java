@@ -18,6 +18,7 @@ import java.util.List;
 public class Menu {
     @Setter
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -33,6 +34,12 @@ public class Menu {
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User user;
+
+    @Setter
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private User latestUpdateBy;
 
     @CreationTimestamp
     @Column(name = "created_at")

@@ -39,4 +39,22 @@ public class RestExceptionHandler {
         RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> itemNotFoundHandler(ItemNotFoundException exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(MenuMismatchException.class)
+    private ResponseEntity<RestErrorMessage> menuMismatchHandler(MenuMismatchException exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(MenuNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> menuNotFoundHandler(MenuNotFoundException exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 }
