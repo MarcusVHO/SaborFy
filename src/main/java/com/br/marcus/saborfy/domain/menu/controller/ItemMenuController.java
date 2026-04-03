@@ -4,7 +4,6 @@ import com.br.marcus.saborfy.domain.menu.dto.request.CreateItemMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.request.UpdateItemMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.response.CreateItemMenuResponse;
 import com.br.marcus.saborfy.domain.menu.dto.response.ItemMenuResponse;
-import com.br.marcus.saborfy.domain.menu.dto.response.MenuResponse;
 import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
 import com.br.marcus.saborfy.domain.menu.service.CreateItemMenuService;
 import com.br.marcus.saborfy.domain.menu.service.DeleteItemMenuService;

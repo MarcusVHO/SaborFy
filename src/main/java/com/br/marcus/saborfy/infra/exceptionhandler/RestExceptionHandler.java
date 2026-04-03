@@ -42,8 +42,8 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(ItemNotFoundException.class)
     private ResponseEntity<RestErrorMessage> itemNotFoundHandler(ItemNotFoundException exception) {
-        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(MenuMismatchException.class)
@@ -54,7 +54,37 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(MenuNotFoundException.class)
     private ResponseEntity<RestErrorMessage> menuNotFoundHandler(MenuNotFoundException exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> orderNotFoundHandler(OrderNotFoundException exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(OrderWithFewItemsException.class)
+    private ResponseEntity<RestErrorMessage> orderWithFewItemsHandler(OrderWithFewItemsException exception) {
         RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(PaymentNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> paymentNotFoundHandler(PaymentNotFoundException exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(PaymentNotCanDelete.class)
+    private ResponseEntity<RestErrorMessage> paymentNotCanDeleteHandler(PaymentNotCanDelete exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(PaymentStatusInvalid.class)
+    private ResponseEntity<RestErrorMessage> paymentStatusInvalidHandler(PaymentStatusInvalid exception) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 }

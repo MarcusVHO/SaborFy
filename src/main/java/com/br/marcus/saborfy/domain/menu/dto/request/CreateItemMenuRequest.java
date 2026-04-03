@@ -1,11 +1,12 @@
 package com.br.marcus.saborfy.domain.menu.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 
 public record CreateItemMenuRequest(
         @NotEmpty(message = "Name is necessary!") String name,
-        Double price,
+        BigDecimal price,
         String description
 ) {
 }

@@ -1,8 +1,10 @@
 package com.br.marcus.saborfy.domain.menu.dto.request;
 
+import java.math.BigDecimal;
+
 public record UpdateItemMenuRequest(
         String name,
-        Double price,
+        BigDecimal price,
         String description
 ) {
 }

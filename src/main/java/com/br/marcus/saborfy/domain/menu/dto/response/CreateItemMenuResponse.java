@@ -3,13 +3,14 @@ package com.br.marcus.saborfy.domain.menu.dto.response;
 import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
 public class CreateItemMenuResponse {
         private final Long id;
         private final String name;
-        private final Double price;
+        private final BigDecimal price;
         private final String description;
         private final LocalDateTime createdAt;
 
