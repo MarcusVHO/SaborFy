@@ -10,7 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -36,9 +36,9 @@ public class Payment {
     @Column(nullable = false)
     private PaymentStatus status;
 
-    private LocalDateTime paidAt;
+    private Instant paidAt;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
 }

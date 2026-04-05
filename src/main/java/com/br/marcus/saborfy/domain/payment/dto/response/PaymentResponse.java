@@ -6,7 +6,7 @@ import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 public class PaymentResponse {
@@ -14,8 +14,8 @@ public class PaymentResponse {
     private final BigDecimal amount;
     private final PaymentMethod method;
     private final PaymentStatus status;
-    private LocalDateTime paidAt;
-    private final LocalDateTime createAt;
+    private Instant paidAt;
+    private final Instant createAt;
 
     public PaymentResponse(Payment payment) {
         this.id = payment.getId();

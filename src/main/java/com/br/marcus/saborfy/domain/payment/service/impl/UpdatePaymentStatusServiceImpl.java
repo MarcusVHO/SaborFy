@@ -9,7 +9,7 @@ import com.br.marcus.saborfy.exceptions.PaymentNotFoundException;
 import com.br.marcus.saborfy.exceptions.PaymentStatusInvalid;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 
 @Service
@@ -30,7 +30,7 @@ public class UpdatePaymentStatusServiceImpl implements UpdatePaymentStatusServic
 
         if (payment.getStatus() == PaymentStatus.PENDING && (status == PaymentStatus.APPROVED || status == PaymentStatus.CANCELED)) {
             if(status == PaymentStatus.APPROVED) {
-                payment.setPaidAt(LocalDateTime.now());
+                payment.setPaidAt(Instant.now());
             }
             payment.setStatus(status);
             paymentRepository.save(payment);

@@ -43,7 +43,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderResponse(order));
     }
 
-    @GetMapping
+    @PostMapping(path = "/list")
     public ResponseEntity<List<OrderListResponse>> listItems (
             @RequestBody OrderFilterRequest request
             ) {

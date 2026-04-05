@@ -2,10 +2,9 @@ package com.br.marcus.saborfy.domain.menu.dto.response;
 
 import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
 import com.br.marcus.saborfy.domain.menu.entity.Menu;
-import com.br.marcus.saborfy.domain.user.entity.User;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class MenuResponse  {
     private final List<ItemMenuResponse> items;
     private final String createBy;
     private final String LatestUpdateBy;
-    private final LocalDateTime createdAt;
+    private final Instant createdAt;
 
 
     public MenuResponse(Menu menu) {

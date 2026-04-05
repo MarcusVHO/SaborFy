@@ -13,29 +13,30 @@ import java.util.List;
 
 @Getter
 @Entity
+@Setter
 @Table(name = "user")
 public class User implements UserDetails {
 
     @Id
-    @Setter
+
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Setter
+
     @Column(nullable = false)
     private String name;
 
 
-    @Setter
+
     @Column(nullable = false, unique = true)
     private Long registration;
 
 
-    @Setter
+
     @Column(nullable = false)
     private String password;
 
-    @Setter
+
     private UserRole role;
 
     @Override

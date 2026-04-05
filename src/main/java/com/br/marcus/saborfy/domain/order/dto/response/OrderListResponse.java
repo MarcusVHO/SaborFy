@@ -9,6 +9,7 @@ import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class OrderListResponse {
     private final List<OrderItemListResponse> items = new ArrayList<>();
     private final List<PaymentMethod> methods = new ArrayList<>();
     private final BigDecimal total_amount;
+    private final Instant createdAt;
 
     public OrderListResponse (Order order) {
         this.id = order.getId();
@@ -33,6 +35,8 @@ public class OrderListResponse {
         this.customer = new OrderCustomerResponse(order.getCustomer());
         this.address = new OrderAddressResponse(order.getAddress());
         this.total_amount = order.getTotalAmount();
+        this.createdAt = order.getCreatedAt();
+
         if (order.getObservation() != null) {
             this.observation = order.getObservation().getObservation();
         }

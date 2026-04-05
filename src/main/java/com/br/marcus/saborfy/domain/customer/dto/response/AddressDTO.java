@@ -3,7 +3,7 @@ package com.br.marcus.saborfy.domain.customer.dto.response;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerAddress;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 public class AddressDTO {
@@ -11,7 +11,7 @@ public class AddressDTO {
     private final String address;
     private final int number;
     private final String complement;
-    private final LocalDateTime createdAt;
+    private final Instant createdAt;
 
     public AddressDTO(CustomerAddress customerAddress) {
         this.id = customerAddress.getId();

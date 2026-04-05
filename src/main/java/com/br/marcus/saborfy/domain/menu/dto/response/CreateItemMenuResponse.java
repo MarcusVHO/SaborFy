@@ -4,7 +4,7 @@ import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 public class CreateItemMenuResponse {
@@ -12,7 +12,7 @@ public class CreateItemMenuResponse {
         private final String name;
         private final BigDecimal price;
         private final String description;
-        private final LocalDateTime createdAt;
+        private final Instant createdAt;
 
 
         public CreateItemMenuResponse(ItemMenu menuItem) {

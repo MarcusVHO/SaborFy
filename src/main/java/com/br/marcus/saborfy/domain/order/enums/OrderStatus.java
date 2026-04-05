@@ -6,8 +6,9 @@ import lombok.Getter;
 public enum OrderStatus {
     CREATED("created"),
     CONFIRMED("confirmed"),
+    PREPARING("preparing"),
     OUT_FOR_DELIVERY("outForDelivery"),
-    DELIVERED("delivered"),
+    COMPLETED("completed"),
     CANCELED("canceled");
 
     private final String status;
