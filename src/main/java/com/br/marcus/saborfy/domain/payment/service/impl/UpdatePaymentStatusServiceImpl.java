@@ -1,5 +1,6 @@
 package com.br.marcus.saborfy.domain.payment.service.impl;
 
+import com.br.marcus.saborfy.domain.payment.dto.request.UpdatePaymentStatusRequest;
 import com.br.marcus.saborfy.domain.payment.entity.Payment;
 import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
 import com.br.marcus.saborfy.domain.payment.repository.PaymentRepository;
@@ -22,23 +23,28 @@ public class UpdatePaymentStatusServiceImpl implements UpdatePaymentStatusServic
     }
 
     @Override
-    public Payment updateStatus(PaymentStatus status, Long orderId, Long paymentId) {
+    public Payment updateStatus(UpdatePaymentStatusRequest request, Long orderId, Long paymentId) {
         Payment payment = paymentRepository.findById(paymentId).orElseThrow(PaymentNotFoundException::new);
         if (!payment.getOrder().getId().equals(orderId)) {
             throw new OrderNotFoundException();
         }
 
-        if (payment.getStatus() == PaymentStatus.PENDING && (status == PaymentStatus.APPROVED || status == PaymentStatus.CANCELED)) {
-            if(status == PaymentStatus.APPROVED) {
-                payment.setPaidAt(Instant.now());
-            }
-            payment.setStatus(status);
+
+        if (payment.getStatus() != PaymentStatus.CANCELED && request.status() == PaymentStatus.CANCELED) {
+            payment.setStatus(request.status());
             paymentRepository.save(payment);
             return payment;
         }
 
-        if (payment.getStatus() == PaymentStatus.APPROVED && status == PaymentStatus.REFUNDED) {
-            payment.setStatus(status);
+        if (payment.getStatus() == PaymentStatus.PENDING && request.status() == PaymentStatus.APPROVED) {
+            payment.setPaidAt(Instant.now());
+            payment.setStatus(request.status());
+            paymentRepository.save(payment);
+            return payment;
+        }
+
+        if (payment.getStatus() == PaymentStatus.APPROVED && request.status() == PaymentStatus.REFUNDED) {
+            payment.setStatus(request.status());
             paymentRepository.save(payment);
             return payment;
         }

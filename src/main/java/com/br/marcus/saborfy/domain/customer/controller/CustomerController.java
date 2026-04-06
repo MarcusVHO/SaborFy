@@ -34,9 +34,11 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponseDTO>> list() {
+    public ResponseEntity<List<CustomerResponseDTO>> list(
+            @RequestParam String name
+    ) {
         List<CustomerResponseDTO> customerResponseDTOS = new ArrayList<>();
-        for (Customer customer : listCustomerService.getCustomerList()) {
+        for (Customer customer : listCustomerService.getCustomerList(name)) {
             customerResponseDTOS.add(new CustomerResponseDTO(customer));
         }
         return ResponseEntity.ok(customerResponseDTOS);

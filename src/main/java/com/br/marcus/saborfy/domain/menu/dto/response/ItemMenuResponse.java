@@ -13,7 +13,7 @@ public class ItemMenuResponse {
     private final BigDecimal price;
     private final String description;
     private final String createBy;
-    private final String latestUpdateBy;
+    private String latestUpdateBy;
     private final Instant createdAt;
 
 
@@ -23,7 +23,7 @@ public class ItemMenuResponse {
         this.price = menuItem.getPrice();
         this.description = menuItem.getDescription();
         this.createBy = menuItem.getUser().getName();
-        this.latestUpdateBy = menuItem.getLatestUpdateBy().getName();
+        if(menuItem.getLatestUpdateBy()!= null) { this.latestUpdateBy = menuItem.getLatestUpdateBy().getName();}
         this.createdAt = menuItem.getCreatedAt();
     }
 }

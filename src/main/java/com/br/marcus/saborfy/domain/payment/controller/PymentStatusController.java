@@ -1,5 +1,6 @@
 package com.br.marcus.saborfy.domain.payment.controller;
 
+import com.br.marcus.saborfy.domain.payment.dto.request.UpdatePaymentStatusRequest;
 import com.br.marcus.saborfy.domain.payment.dto.response.PaymentResponse;
 import com.br.marcus.saborfy.domain.payment.entity.Payment;
 import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
@@ -20,11 +21,11 @@ public class PymentStatusController {
 
     @PatchMapping
     public ResponseEntity<PaymentResponse> update(
-            @RequestBody @NotNull(message = "PaymentStatus is necessary!") PaymentStatus status,
+            @RequestBody UpdatePaymentStatusRequest request,
             @RequestParam @NotNull(message = "Order ID is necessary!") Long orderId,
             @RequestParam @NotNull(message = "Payment ID is necessary!") Long paymentId
     ) {
-        Payment payment = updatePaymentStatusService.updateStatus(status, orderId, paymentId);
+        Payment payment = updatePaymentStatusService.updateStatus(request, orderId, paymentId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentResponse(payment));
     }
 }

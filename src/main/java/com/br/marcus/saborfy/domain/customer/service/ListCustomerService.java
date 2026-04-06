@@ -14,8 +14,10 @@ public class ListCustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getCustomerList() {
-        List<Customer> customers = customerRepository.findAll();
-        return customers;
+    public List<Customer> getCustomerList(String name) {
+        if (name != null) {
+            return customerRepository.findCustomerByNameLike("%" + name + "%");
+        }
+        return customerRepository.findAll();
     }
 }

@@ -25,10 +25,11 @@ public class DeletePaymentServiceImpl implements DeletePaymentService {
             throw new OrderNotFoundException();
         }
 
-        if (payment.getStatus().equals(PaymentStatus.REFUNDED) || payment.getStatus().equals(PaymentStatus.APPROVED)) {
+        if (payment.getStatus() != PaymentStatus.PENDING) {
             throw new PaymentNotCanDelete();
         }
 
         paymentRepository.delete(payment);
+
     }
 }

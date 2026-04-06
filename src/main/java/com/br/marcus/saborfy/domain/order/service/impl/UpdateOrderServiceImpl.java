@@ -48,6 +48,10 @@ public class UpdateOrderServiceImpl implements UpdateOrderService {
             }
         }
 
+        if (request.status() != null) {
+            order.setOrderStatus(request.status());
+        }
+
         return orderRepository.save(order);
     }
 }
