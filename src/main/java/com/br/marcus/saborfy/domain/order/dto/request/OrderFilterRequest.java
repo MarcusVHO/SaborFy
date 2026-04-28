@@ -2,7 +2,7 @@ package com.br.marcus.saborfy.domain.order.dto.request;
 
 import com.br.marcus.saborfy.domain.order.enums.OrderStatus;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record OrderFilterRequest(
          String name,
@@ -10,7 +10,7 @@ public record OrderFilterRequest(
          Long orderNumber,
          String street,
          Integer addressNumber,
-         LocalDateTime startDate,
-         LocalDateTime endDate
+         Instant startDate,
+         Instant endDate
 ) {
 }

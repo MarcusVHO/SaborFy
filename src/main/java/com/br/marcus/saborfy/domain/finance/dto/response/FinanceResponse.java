@@ -1,4 +1,4 @@
-package com.br.marcus.saborfy.domain.finance.dto;
+package com.br.marcus.saborfy.domain.finance.dto.response;
 
 import com.br.marcus.saborfy.domain.finance.enums.FinanceType;
 

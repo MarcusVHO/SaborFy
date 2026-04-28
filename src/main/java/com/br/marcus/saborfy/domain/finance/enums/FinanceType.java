@@ -5,7 +5,13 @@ import lombok.Getter;
 @Getter
 public enum FinanceType {
     EXPENSE("expense"),
-    REVENUE("revenue");
+    REVENUE("revenue"),
+    INCOME("income"),
+    NEUTRAL("neutral"),
+    REFUNDED("refunded"),
+    CANCELED("canceled"),
+    PENDING("pending");
+
 
     private final String type;
 

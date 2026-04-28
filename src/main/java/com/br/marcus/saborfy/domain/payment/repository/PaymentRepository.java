@@ -1,6 +1,7 @@
 package com.br.marcus.saborfy.domain.payment.repository;
 
 import com.br.marcus.saborfy.domain.payment.entity.Payment;
+import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -42,4 +43,30 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     List<Object[]> getSalesLast7Days();
 
     List<Payment> findTop10ByOrderByPaidAtDesc();
+
+    List<Payment> findALlByPaidAtBetween(Instant startDate, Instant endDate);
+
+    @Query(""" 
+       SELECT SUM (p.amount)
+       FROM Payment p
+       WHERE p.paidAt BETWEEN :startDate AND :endDate
+       AND p.status = :status
+    """)
+    BigDecimal sumByPeriodAndStatus(
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate,
+            @Param("status") PaymentStatus status
+    );
+
+    @Query(""" 
+       SELECT AVG (p.amount)
+       FROM Payment p
+       WHERE p.paidAt BETWEEN :startDate AND :endDate
+       AND p.status = :status
+    """)
+    BigDecimal avgByPeriodAndStatus(
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate,
+            @Param("status") PaymentStatus status
+    );
 }

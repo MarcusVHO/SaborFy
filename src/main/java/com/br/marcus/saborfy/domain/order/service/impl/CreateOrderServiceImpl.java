@@ -9,11 +9,15 @@ import com.br.marcus.saborfy.domain.order.entity.*;
 import com.br.marcus.saborfy.domain.order.repository.OrderRepository;
 import com.br.marcus.saborfy.domain.order.service.OrderItemService;
 import com.br.marcus.saborfy.domain.order.service.CreateOrderService;
+import com.br.marcus.saborfy.domain.payment.dto.request.CreatePaymentRequest;
+import com.br.marcus.saborfy.domain.payment.entity.Payment;
+import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
 import com.br.marcus.saborfy.exceptions.AddressNotFoundException;
 import com.br.marcus.saborfy.exceptions.CustomerNotFoundException;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,6 +70,19 @@ public class CreateOrderServiceImpl implements CreateOrderService {
         newOrder.setCustomer(newCustomer);
         newOrder.setUserId(user.id());
         newOrder.setLatestUpdateBy(user.id());
+
+        if (request.payments() != null) {
+            List<Payment> payments = new ArrayList<>();
+            for (CreatePaymentRequest paymentRequest : request.payments()) {
+                Payment newPayment = new Payment();
+                newPayment.setOrder(newOrder);
+                newPayment.setAmount(paymentRequest.amount());
+                newPayment.setMethod(paymentRequest.method());
+                newPayment.setStatus(PaymentStatus.PENDING);
+                payments.add(newPayment);
+            }
+            newOrder.setPayments(payments);
+        }
 
         orderRepository.save(newOrder);
         return newOrder;

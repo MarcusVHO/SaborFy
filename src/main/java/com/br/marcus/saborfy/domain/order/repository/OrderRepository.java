@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -28,9 +27,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             @Param("orderNumber") Long orderNumber,
             @Param("street") String street,
             @Param("addressNumber") Integer addressNumber,
-            @Param("startDate") LocalDateTime startDate,
-            @Param("endDate") LocalDateTime endDate );
+            @Param("startDate") Instant startDate,
+            @Param("endDate") Instant endDate );
 
     List<Order> findByOrderStatusAndCreatedAtBetween(OrderStatus orderStatus, Instant createdAtAfter, Instant createdAtBefore);
+
+
+
 }
 
