@@ -12,7 +12,7 @@ Backend de um sistema de gestão para pedidos e cardápio, desenvolvido com foco
 - JWT (Autenticação)
 - Maven
 - Docker
-- Banco de Dados (PostgreSQL/MySQL)
+- Banco de Dados (MySQL)
 
 ---
 
@@ -24,8 +24,6 @@ Backend de um sistema de gestão para pedidos e cardápio, desenvolvido com foco
 - 🛒 Criação e gerenciamento de pedidos
 - 📦 Itens de pedidos
 - 💳 Controle de pagamentos
-- 📊 Dashboard de pagamentos
-- 🧩 Organização de pedidos (Kanban)
 
 ---
 
