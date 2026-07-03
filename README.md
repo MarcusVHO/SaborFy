@@ -1,67 +1,85 @@
 # 🍔 SaborFy API
 
-Backend de um sistema de gestão para pedidos e cardápio, desenvolvido com foco em boas práticas de arquitetura, segurança e escalabilidade.
+API REST desenvolvida em Java com Spring Boot para gerenciar pedidos de um restaurante. O projeto foi criado com o objetivo de praticar o desenvolvimento de aplicações backend utilizando autenticação, organização em camadas e persistência de dados.
 
----
+## Funcionalidades
 
-## 🚀 Tecnologias utilizadas
+- Cadastro e autenticação de usuários utilizando JWT
+- Gerenciamento do cardápio
+- Criação e acompanhamento de pedidos
+- Controle dos itens de cada pedido
+- Registro de pagamentos
+- Proteção das rotas da aplicação com Spring Security
+
+## Tecnologias
 
 - Java 17
 - Spring Boot
 - Spring Security
-- JWT (Autenticação)
+- Spring Data JPA
+- JWT
+- MySQL
 - Maven
 - Docker
-- Banco de Dados (MySQL)
 
----
+## Estrutura do projeto
 
-## 📌 Funcionalidades
+O projeto foi organizado em camadas para separar as responsabilidades da aplicação.
 
-- 🔐 Autenticação e autorização com JWT
-- 👤 Gerenciamento de usuários
-- 📋 Gestão de cardápio
-- 🛒 Criação e gerenciamento de pedidos
-- 📦 Itens de pedidos
-- 💳 Controle de pagamentos
+```
+src
+├── config
+├── controller
+├── dto
+├── entity
+├── repository
+├── security
+├── service
+└── exception
+```
 
----
+Essa organização facilita a manutenção do código e evita que regras de negócio fiquem misturadas com a camada responsável pelas requisições HTTP.
 
-## 🏗️ Arquitetura
-
-O projeto segue uma estrutura organizada por domínio:
-
-- Separação clara de responsabilidades
-- Camadas bem definidas
-- Código preparado para escalabilidade
-
----
-
-## 🔐 Segurança
-
-- Autenticação baseada em JWT
-- Filtros com Spring Security
-- Configuração de CORS
-- Proteção de rotas
-
----
-
-## ⚙️ Como rodar o projeto
+## Como executar
 
 ### Pré-requisitos
 
-- Java 17+
+- Java 17 ou superior
 - Maven
+- MySQL
 - Docker (opcional)
 
-### Rodando localmente
+### Clonando o projeto
 
 ```bash
-# Clone o repositório
 git clone https://github.com/seu-usuario/saborfy.git
 
-# Entre na pasta
 cd saborfy
+```
 
-# Rode o projeto
+### Executando
+
+```bash
 ./mvnw spring-boot:run
+```
+
+Ou, caso utilize Maven instalado na máquina:
+
+```bash
+mvn spring-boot:run
+```
+
+## Segurança
+
+A autenticação é feita utilizando JWT. Após realizar o login, o cliente recebe um token que deve ser enviado nas requisições para acessar os endpoints protegidos.
+
+## Objetivo
+
+Este projeto faz parte do meu portfólio de backend e foi desenvolvido para colocar em prática conceitos como:
+
+- APIs REST
+- Spring Security
+- Autenticação com JWT
+- Persistência de dados com JPA
+- Organização em camadas
+- Tratamento de exceções
