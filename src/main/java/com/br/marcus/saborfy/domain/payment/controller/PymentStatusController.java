@@ -3,8 +3,7 @@ package com.br.marcus.saborfy.domain.payment.controller;
 import com.br.marcus.saborfy.domain.payment.dto.request.UpdatePaymentStatusRequest;
 import com.br.marcus.saborfy.domain.payment.dto.response.PaymentResponse;
 import com.br.marcus.saborfy.domain.payment.entity.Payment;
-import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
-import com.br.marcus.saborfy.domain.payment.service.UpdatePaymentStatusService;
+import com.br.marcus.saborfy.domain.payment.service.PaymentService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/payment/status")
 public class PymentStatusController {
-    private final UpdatePaymentStatusService updatePaymentStatusService;
+    private final PaymentService paymentService;
 
-    public PymentStatusController(UpdatePaymentStatusService updatePaymentStatusService) {
-        this.updatePaymentStatusService = updatePaymentStatusService;
+    public PymentStatusController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     @PatchMapping
@@ -25,7 +24,7 @@ public class PymentStatusController {
             @RequestParam @NotNull(message = "Order ID is necessary!") Long orderId,
             @RequestParam @NotNull(message = "Payment ID is necessary!") Long paymentId
     ) {
-        Payment payment = updatePaymentStatusService.updateStatus(request, orderId, paymentId);
+        Payment payment = paymentService.updateStatus(request, orderId, paymentId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentResponse(payment));
     }
 }

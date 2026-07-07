@@ -6,10 +6,7 @@ import com.br.marcus.saborfy.domain.order.dto.request.UpdateOrderRequest;
 import com.br.marcus.saborfy.domain.order.dto.response.OrderListResponse;
 import com.br.marcus.saborfy.domain.order.dto.response.OrderResponse;
 import com.br.marcus.saborfy.domain.order.entity.Order;
-import com.br.marcus.saborfy.domain.order.service.CancelOrderService;
-import com.br.marcus.saborfy.domain.order.service.CreateOrderService;
 import com.br.marcus.saborfy.domain.order.service.OrderService;
-import com.br.marcus.saborfy.domain.order.service.UpdateOrderService;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
@@ -22,16 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/order")
 public class OrderController {
-    private final CreateOrderService createOrderService;
     private final OrderService orderService;
-    private final CancelOrderService cancelOrderService;
-    private final UpdateOrderService updateOrderService;
 
-    public OrderController(CreateOrderService createOrderService, OrderService orderService, CancelOrderService cancelOrderService, UpdateOrderService updateOrderService) {
-        this.createOrderService = createOrderService;
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.cancelOrderService = cancelOrderService;
-        this.updateOrderService = updateOrderService;
     }
 
     @PostMapping
@@ -39,7 +30,7 @@ public class OrderController {
             @AuthenticationPrincipal AuthenticatedUser user,
             @RequestBody CreateOrderRequest request
             ) {
-        Order order = createOrderService.createOrder(user, request);
+        Order order = orderService.createOrder(user, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderResponse(order));
     }
 
@@ -64,7 +55,7 @@ public class OrderController {
             @AuthenticationPrincipal AuthenticatedUser user,
             @NotNull(message = "Order ID is necessary!") Long orderId
     ){
-        cancelOrderService.cancelOrder(user, orderId);
+        orderService.cancelOrder(user, orderId);
         return ResponseEntity.noContent().build();
     }
 
@@ -74,7 +65,7 @@ public class OrderController {
             @NotNull(message = "Order ID is necessary!") Long orderId,
             @RequestBody UpdateOrderRequest request
             ) {
-        Order order = updateOrderService.updateOrderAddress(user, request, orderId);
+        Order order = orderService.updateOrderAddress(user, request, orderId);
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderResponse(order));
     }
 

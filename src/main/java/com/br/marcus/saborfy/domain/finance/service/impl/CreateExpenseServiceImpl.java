@@ -13,6 +13,7 @@ public class CreateExpenseServiceImpl implements CreateExpenseService {
     public CreateExpenseServiceImpl(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;
     }
+    
     @Override
     public Expense createExpense(CreateExpenseRequest request) {
         Expense expense = new Expense();

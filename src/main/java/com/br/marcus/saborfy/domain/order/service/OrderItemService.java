@@ -10,4 +10,7 @@ import java.util.List;
 
 public interface OrderItemService {
     List<OrderItem> create(@NonNull List<CreateOrderItemRequest> items, Order order, AuthenticatedUser user);
+    Order createItem(AuthenticatedUser user, Long orderId, List<CreateOrderItemRequest> itemRequests);
+    void deleteOrderItem(Long orderId, Long itemId);
+
 }

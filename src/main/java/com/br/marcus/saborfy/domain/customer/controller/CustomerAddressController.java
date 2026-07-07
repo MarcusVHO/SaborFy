@@ -3,7 +3,8 @@ package com.br.marcus.saborfy.domain.customer.controller;
 import com.br.marcus.saborfy.domain.customer.dto.request.CreateAddressRequest;
 import com.br.marcus.saborfy.domain.customer.dto.response.AddressDTO;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerAddress;
-import com.br.marcus.saborfy.domain.customer.service.CustomerAddressService;
+import com.br.marcus.saborfy.domain.customer.service.AddressService;
+import com.br.marcus.saborfy.domain.customer.service.impl.AddressServiceImpl;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerAddressController {
-    private final CustomerAddressService customerAddressService;
+    private final AddressService addressService;
 
-    public CustomerAddressController(CustomerAddressService customerAddressService) {
-        this.customerAddressService = customerAddressService;
+    public CustomerAddressController(AddressService addressService) {
+        this.addressService = addressService;
     }
 
 
@@ -29,7 +30,7 @@ public class CustomerAddressController {
             @Valid @RequestBody CreateAddressRequest newAddress
     ) {
 
-        CustomerAddress customerAddress = customerAddressService.create(user, newAddress, customerId);
+        CustomerAddress customerAddress = addressService.create(user, newAddress, customerId);
         AddressDTO addressDTO = new AddressDTO(customerAddress);
         return ResponseEntity.status(HttpStatus.CREATED).body(addressDTO);
     }
@@ -40,7 +41,7 @@ public class CustomerAddressController {
             @Valid @RequestParam Long customerId,
             @Valid @RequestParam Long addressId
     ) {
-        customerAddressService.delete(customerId, addressId);
+        addressService.delete(customerId, addressId);
 
         return ResponseEntity.noContent().build();
     }

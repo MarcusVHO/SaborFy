@@ -5,10 +5,7 @@ import com.br.marcus.saborfy.domain.menu.dto.request.CreateMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.response.CreateMenuResponse;
 import com.br.marcus.saborfy.domain.menu.dto.response.MenuResponse;
 import com.br.marcus.saborfy.domain.menu.entity.Menu;
-import com.br.marcus.saborfy.domain.menu.service.CreateMenuService;
-import com.br.marcus.saborfy.domain.menu.service.DeleteMenuService;
-import com.br.marcus.saborfy.domain.menu.service.ListMenuService;
-import com.br.marcus.saborfy.domain.menu.service.UpdateMenuService;
+import com.br.marcus.saborfy.domain.menu.service.*;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,21 +21,15 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/menu")
 public class MenuController {
-    private final ListMenuService listMenuService;
-    private final CreateMenuService createMenuService;
-    private final UpdateMenuService updateMenuService;
-    private final DeleteMenuService deleteMenuService;
+    private final MenuService menuService;
+    public MenuController(MenuService menuService) {
 
-    public MenuController(ListMenuService listMenuService, CreateMenuService createMenuService, UpdateMenuService updateMenuService, DeleteMenuService deleteMenuService) {
-        this.listMenuService = listMenuService;
-        this.createMenuService = createMenuService;
-        this.updateMenuService = updateMenuService;
-        this.deleteMenuService = deleteMenuService;
+        this.menuService = menuService;
     }
 
     @GetMapping
     public ResponseEntity<List<MenuResponse>> list() {
-        List<Menu> menus = listMenuService.menuList();
+        List<Menu> menus = menuService.menuList();
 
         List<MenuResponse> menuResponses = new ArrayList<>();
         for (Menu menu : menus) {
@@ -50,7 +41,7 @@ public class MenuController {
 
     @PostMapping
     public ResponseEntity<CreateMenuResponse> create(@AuthenticationPrincipal AuthenticatedUser user, @Valid @RequestBody CreateMenuRequest request) {
-        Menu menu = createMenuService.create(user, request);
+        Menu menu = menuService.create(user, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new CreateMenuResponse(menu));
     }
 
@@ -61,7 +52,7 @@ public class MenuController {
             @NotNull @RequestParam Long id
 
     ) {
-        Menu menu = updateMenuService.updateMenu(user, request, id);
+        Menu menu = menuService.updateMenu(user, request, id);
         return ResponseEntity.status(HttpStatus.CREATED).body(new MenuResponse(menu));
     }
 
@@ -69,7 +60,7 @@ public class MenuController {
     public ResponseEntity<Void> delete(
             @NotNull @RequestParam Long id
     ) {
-        deleteMenuService.deleMenu(id);
+        menuService.deleMenu(id);
         return ResponseEntity.noContent().build();
     }
 }

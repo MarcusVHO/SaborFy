@@ -3,7 +3,7 @@ package com.br.marcus.saborfy.domain.customer.controller;
 import com.br.marcus.saborfy.domain.customer.dto.request.CreatePhoneRequest;
 import com.br.marcus.saborfy.domain.customer.dto.response.PhoneDTO;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerPhone;
-import com.br.marcus.saborfy.domain.customer.service.CustomerPhoneService;
+import com.br.marcus.saborfy.domain.customer.service.PhoneService;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerPhoneController {
-    private final CustomerPhoneService customerPhoneService;
+    private final PhoneService phoneService;
 
-    public CustomerPhoneController(CustomerPhoneService customerPhoneService) {
-        this.customerPhoneService = customerPhoneService;
+    public CustomerPhoneController(PhoneService phoneService) {
+        this.phoneService = phoneService;
     }
 
 
@@ -27,7 +27,7 @@ public class CustomerPhoneController {
             @Valid @RequestParam Long customerId,
             @Valid @RequestBody CreatePhoneRequest request
     ) {
-        CustomerPhone customerPhone = customerPhoneService.create(user, customerId, request);
+        CustomerPhone customerPhone = phoneService.create(user, customerId, request);
         PhoneDTO phoneDTO = new PhoneDTO(customerPhone);
         return ResponseEntity.status(HttpStatus.CREATED).body(phoneDTO);
 
@@ -39,7 +39,7 @@ public class CustomerPhoneController {
             @Valid @RequestParam Long customerId,
             @Valid @RequestParam Long phoneId
     ) {
-        customerPhoneService.delete(customerId, phoneId);
+        phoneService.delete(customerId, phoneId);
         return ResponseEntity.noContent().build();
     }
 }

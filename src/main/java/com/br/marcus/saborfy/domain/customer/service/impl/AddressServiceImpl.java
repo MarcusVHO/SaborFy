@@ -1,10 +1,11 @@
-package com.br.marcus.saborfy.domain.customer.service;
+package com.br.marcus.saborfy.domain.customer.service.impl;
 
 import com.br.marcus.saborfy.domain.customer.dto.request.CreateAddressRequest;
 import com.br.marcus.saborfy.domain.customer.entity.Customer;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerAddress;
 import com.br.marcus.saborfy.domain.customer.repository.CustomerAddressRepository;
 import com.br.marcus.saborfy.domain.customer.repository.CustomerRepository;
+import com.br.marcus.saborfy.domain.customer.service.AddressService;
 import com.br.marcus.saborfy.exceptions.AddressNotFoundException;
 import com.br.marcus.saborfy.exceptions.CustomerMismatchException;
 import com.br.marcus.saborfy.exceptions.CustomerNotFoundException;
@@ -14,11 +15,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CustomerAddressService {
+public class AddressServiceImpl implements AddressService {
     private final CustomerAddressRepository customerAddressRepository;
     private final CustomerRepository customerRepository;
 
-    public CustomerAddressService(CustomerAddressRepository customerAddressRepository, CustomerRepository customerRepository) {
+    public AddressServiceImpl(CustomerAddressRepository customerAddressRepository, CustomerRepository customerRepository) {
         this.customerAddressRepository = customerAddressRepository;
         this.customerRepository = customerRepository;
     }

@@ -1,10 +1,11 @@
-package com.br.marcus.saborfy.domain.customer.service;
+package com.br.marcus.saborfy.domain.customer.service.impl;
 
 import com.br.marcus.saborfy.domain.customer.dto.request.CreatePhoneRequest;
 import com.br.marcus.saborfy.domain.customer.entity.Customer;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerPhone;
 import com.br.marcus.saborfy.domain.customer.repository.CustomerPhoneRepository;
 import com.br.marcus.saborfy.domain.customer.repository.CustomerRepository;
+import com.br.marcus.saborfy.domain.customer.service.PhoneService;
 import com.br.marcus.saborfy.exceptions.CustomerMismatchException;
 import com.br.marcus.saborfy.exceptions.CustomerNotFoundException;
 import com.br.marcus.saborfy.exceptions.PhoneNotFoundException;
@@ -14,11 +15,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CustomerPhoneService {
+public class PhoneServiceImpl implements PhoneService {
     private final CustomerPhoneRepository customerPhoneRepository;
     private final CustomerRepository customerRepository;
 
-    public CustomerPhoneService(CustomerPhoneRepository customerPhoneRepository, CustomerRepository customerRepository) {
+    public PhoneServiceImpl(CustomerPhoneRepository customerPhoneRepository, CustomerRepository customerRepository) {
         this.customerPhoneRepository = customerPhoneRepository;
         this.customerRepository = customerRepository;
     }

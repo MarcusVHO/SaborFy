@@ -7,6 +7,5 @@ import java.time.Instant;
 import java.util.List;
 
 public interface KanbanOrderService {
-
     List<Order> getOrdersForKanban(OrderStatus status, Instant startDate, Instant endDate);
 }
