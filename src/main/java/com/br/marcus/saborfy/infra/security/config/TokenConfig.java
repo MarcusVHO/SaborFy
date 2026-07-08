@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.br.marcus.saborfy.domain.auth.interfaces.AuthTokenDetails;
 import com.br.marcus.saborfy.domain.user.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,13 @@ import java.util.Optional;
 public class TokenConfig {
     private String secret = "macacosebanans";
 
-    public String generateToken(User user) {
+    public String generateToken(AuthTokenDetails userDetails) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.create()
-                    .withClaim("userId", user.getId())
-                    .withSubject(String.valueOf(user.getRegistration()))
+                    .withClaim("userId", userDetails.getId())
+                    .withSubject(userDetails.getUsername())
                     .withExpiresAt(genExpirationDate())
                     .withIssuedAt(Instant.now())
                     .sign(algorithm);

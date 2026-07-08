@@ -1,5 +1,6 @@
 package com.br.marcus.saborfy.domain.user.entity;
 
+import com.br.marcus.saborfy.domain.auth.interfaces.AuthTokenDetails;
 import com.br.marcus.saborfy.domain.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,10 +16,9 @@ import java.util.List;
 @Entity
 @Setter
 @Table(name = "user")
-public class User implements UserDetails {
+public class User implements AuthTokenDetails {
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
