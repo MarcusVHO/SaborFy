@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Entity
 @Setter
-@Table(name = "user")
+@Table(name = "users")
 public class User implements AuthTokenDetails {
 
     @Id
