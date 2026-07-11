@@ -2,7 +2,7 @@ package com.br.marcus.saborfy.domain.order.service.impl;
 
 import com.br.marcus.saborfy.domain.customer.entity.Customer;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerAddress;
-import com.br.marcus.saborfy.domain.customer.repository.CustomerAddressRepository;
+import com.br.marcus.saborfy.domain.customer.repository.AddressRepository;
 import com.br.marcus.saborfy.domain.customer.repository.CustomerRepository;
 import com.br.marcus.saborfy.domain.order.dto.request.CreateOrderRequest;
 import com.br.marcus.saborfy.domain.order.dto.request.OrderFilterRequest;
@@ -15,7 +15,6 @@ import com.br.marcus.saborfy.domain.order.service.OrderService;
 import com.br.marcus.saborfy.domain.payment.dto.request.CreatePaymentRequest;
 import com.br.marcus.saborfy.domain.payment.entity.Payment;
 import com.br.marcus.saborfy.domain.payment.enums.PaymentStatus;
-import com.br.marcus.saborfy.domain.payment.repository.PaymentRepository;
 import com.br.marcus.saborfy.exceptions.AddressNotFoundException;
 import com.br.marcus.saborfy.exceptions.CustomerNotFoundException;
 import com.br.marcus.saborfy.exceptions.OrderNotFoundException;
@@ -31,13 +30,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final OrderItemService orderItemService;
-    private final CustomerAddressRepository customerAddressRepository;
+    private final AddressRepository addressRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository, OrderItemService orderItemService, CustomerAddressRepository customerAddressRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository, OrderItemService orderItemService, AddressRepository addressRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.orderItemService = orderItemService;
-        this.customerAddressRepository = customerAddressRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -135,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
         order.setLatestUpdateBy(user.id());
 
         if (request.addressId() != null) {
-            CustomerAddress address = customerAddressRepository.findById(request.addressId()).orElseThrow(AddressNotFoundException::new);
+            CustomerAddress address = addressRepository.findById(request.addressId()).orElseThrow(AddressNotFoundException::new);
             OrderAddress newAddress = new OrderAddress();
             newAddress.setStreet(address.getAddress());
             newAddress.setComplement(address.getComplement());

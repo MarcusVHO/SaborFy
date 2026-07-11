@@ -1,34 +1,35 @@
 package com.br.marcus.saborfy.domain.customer.service.impl;
-
 import com.br.marcus.saborfy.domain.customer.dto.request.CreateAddressRequest;
+import com.br.marcus.saborfy.domain.customer.dto.response.AddressDTO;
 import com.br.marcus.saborfy.domain.customer.entity.Customer;
 import com.br.marcus.saborfy.domain.customer.entity.CustomerAddress;
-import com.br.marcus.saborfy.domain.customer.repository.CustomerAddressRepository;
-import com.br.marcus.saborfy.domain.customer.repository.CustomerRepository;
+import com.br.marcus.saborfy.domain.customer.mapper.AddressMapper;
+import com.br.marcus.saborfy.domain.customer.query.AddressFinder;
+import com.br.marcus.saborfy.domain.customer.query.CustomerFinder;
+import com.br.marcus.saborfy.domain.customer.repository.AddressRepository;
 import com.br.marcus.saborfy.domain.customer.service.AddressService;
-import com.br.marcus.saborfy.exceptions.AddressNotFoundException;
-import com.br.marcus.saborfy.exceptions.CustomerMismatchException;
-import com.br.marcus.saborfy.exceptions.CustomerNotFoundException;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
-import com.br.marcus.saborfy.domain.user.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
 public class AddressServiceImpl implements AddressService {
-    private final CustomerAddressRepository customerAddressRepository;
-    private final CustomerRepository customerRepository;
+    private final AddressRepository addressRepository;
+    private final CustomerFinder customerFinder;
+    private final AddressFinder addressFinder;
+    private final AddressMapper addressMapper;
 
-    public AddressServiceImpl(CustomerAddressRepository customerAddressRepository, CustomerRepository customerRepository) {
-        this.customerAddressRepository = customerAddressRepository;
-        this.customerRepository = customerRepository;
+    public AddressServiceImpl(AddressRepository addressRepository, CustomerFinder customerFinder, AddressFinder addressFinder, AddressMapper addressMapper) {
+        this.addressRepository = addressRepository;
+        this.customerFinder = customerFinder;
+        this.addressFinder = addressFinder;
+        this.addressMapper = addressMapper;
     }
 
-    public CustomerAddress create(AuthenticatedUser user, CreateAddressRequest request, Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(CustomerNotFoundException::new);
+    @Transactional
+    public AddressDTO create(AuthenticatedUser user, CreateAddressRequest request, Long customerId) {
+        Customer customer = customerFinder.findEntityById(customerId);
         CustomerAddress newAddress = new CustomerAddress(
                 request.address(),
                 request.number(),
@@ -36,14 +37,13 @@ public class AddressServiceImpl implements AddressService {
                 customer,
                 user.id()
         );
-        customerAddressRepository.save(newAddress);
-        return newAddress;
+        addressRepository.save(newAddress);
+        return addressMapper.toResponse(newAddress);
     }
 
+    @Transactional
     public void delete(Long customerId, Long addressId) {
-        CustomerAddress address = customerAddressRepository.findByIdAndCustomerId(addressId, customerId)
-                .orElseThrow(AddressNotFoundException::new);
-        customerAddressRepository.delete(address);
-
+        CustomerAddress address = addressFinder.byIdAndCustomerId(addressId, customerId);
+        addressRepository.delete(address);
     }
 }

@@ -9,7 +9,6 @@ import com.br.marcus.saborfy.domain.customer.mapper.CustomerMapper;
 import com.br.marcus.saborfy.domain.customer.query.CustomerFinder;
 import com.br.marcus.saborfy.domain.customer.repository.CustomerRepository;
 import com.br.marcus.saborfy.domain.customer.service.CustomerService;
-import com.br.marcus.saborfy.exceptions.CustomerNotFoundException;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     public void delete(Long customerId) {
-        Customer customer = customerFinder.byId(customerId);
+        Customer customer = customerFinder.findEntityById(customerId);
         repository.delete(customer);
     }
 
@@ -51,11 +50,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     public CustomerResponseDTO update(AuthenticatedUser user, Long customerId, UpdateCustomerRequest request) {
-        Customer customer = customerFinder.byId(customerId);
+        Customer customer = customerFinder.findEntityById(customerId);
         customer.changeLatestUpdatedBy(user.id());
         customer.changeName(request.name());
         return mapper.toResponse(customer);
     }
-
-
 }
