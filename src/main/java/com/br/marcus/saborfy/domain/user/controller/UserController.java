@@ -4,7 +4,7 @@ package com.br.marcus.saborfy.domain.user.controller;
 import com.br.marcus.saborfy.domain.user.dto.response.RegisterUserResponse;
 import com.br.marcus.saborfy.domain.user.dto.request.RegisterUserRequest;
 import com.br.marcus.saborfy.domain.user.entity.User;
-import com.br.marcus.saborfy.domain.user.service.CreateUserService;
+import com.br.marcus.saborfy.domain.user.service.impl.CreateUserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

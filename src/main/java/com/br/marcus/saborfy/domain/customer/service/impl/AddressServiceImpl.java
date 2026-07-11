@@ -13,6 +13,8 @@ import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import com.br.marcus.saborfy.domain.user.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -27,30 +29,20 @@ public class AddressServiceImpl implements AddressService {
     public CustomerAddress create(AuthenticatedUser user, CreateAddressRequest request, Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(CustomerNotFoundException::new);
-
-        User currentUser = new User();
-        currentUser.setId(user.id());
-
-
-        CustomerAddress newAddress = new CustomerAddress();
-        newAddress.setAddress(request.address());
-        newAddress.setNumber(request.number());
-        newAddress.setComplement(request.complement());
-        newAddress.setCustomer(customer);
-        newAddress.setUser(currentUser);
-
+        CustomerAddress newAddress = new CustomerAddress(
+                request.address(),
+                request.number(),
+                request.complement(),
+                customer,
+                user.id()
+        );
         customerAddressRepository.save(newAddress);
         return newAddress;
     }
 
     public void delete(Long customerId, Long addressId) {
-        CustomerAddress address = customerAddressRepository.findById(addressId)
+        CustomerAddress address = customerAddressRepository.findByIdAndCustomerId(addressId, customerId)
                 .orElseThrow(AddressNotFoundException::new);
-
-        if (!address.getCustomer().getId().equals(customerId)) {
-            throw new CustomerMismatchException("Address does not belong to this customer");
-        }
-
         customerAddressRepository.delete(address);
 
     }

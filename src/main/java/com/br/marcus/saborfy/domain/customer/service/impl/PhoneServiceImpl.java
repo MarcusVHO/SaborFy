@@ -13,6 +13,8 @@ import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import com.br.marcus.saborfy.domain.user.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class PhoneServiceImpl implements PhoneService {
@@ -29,12 +31,9 @@ public class PhoneServiceImpl implements PhoneService {
                 .orElseThrow(CustomerNotFoundException::new
                 );
 
-        User currentUser = new User();
-        currentUser.setId(user.id());
-
         CustomerPhone newPhone = new CustomerPhone();
         newPhone.setCustomer(customer);
-        newPhone.setUser(currentUser);
+        newPhone.setCreatedBy(user.id());
         newPhone.setNumber(request.number());
 
         customerPhoneRepository.save(newPhone);

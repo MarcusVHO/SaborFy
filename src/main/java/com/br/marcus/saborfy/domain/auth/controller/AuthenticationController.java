@@ -1,7 +1,7 @@
 package com.br.marcus.saborfy.domain.auth.controller;
 
 import com.br.marcus.saborfy.domain.auth.dto.request.LoginRequest;
-import com.br.marcus.saborfy.domain.auth.dto.response.LoginResponse;
+import com.br.marcus.saborfy.domain.auth.dto.response.TokenDTO;
 import com.br.marcus.saborfy.domain.auth.service.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login (@RequestBody @Valid LoginRequest request) {
+    public ResponseEntity<TokenDTO> login (@RequestBody @Valid LoginRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
 
     }

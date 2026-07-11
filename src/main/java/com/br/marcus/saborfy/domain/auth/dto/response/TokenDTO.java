@@ -1,4 +1,4 @@
 package com.br.marcus.saborfy.domain.auth.dto.response;
 
-public record LoginResponse (String token){
+public record TokenDTO(String token){
 }

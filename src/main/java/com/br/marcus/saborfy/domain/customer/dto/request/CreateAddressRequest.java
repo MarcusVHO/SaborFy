@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreateAddressRequest(
         @NotEmpty(message = "Adress is necessary") String address,
-        @NotNull(message = "Number is necessary") int number,
+        @NotNull(message = "Number is necessary") Integer number,
         String complement) {
 }
