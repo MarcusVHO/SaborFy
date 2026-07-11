@@ -29,10 +29,7 @@ public class CustomerAddressController {
             @Valid @RequestParam Long customerId,
             @Valid @RequestBody CreateAddressRequest newAddress
     ) {
-
-        CustomerAddress customerAddress = addressService.create(user, newAddress, customerId);
-        AddressDTO addressDTO = new AddressDTO(customerAddress);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.create(user, newAddress, customerId));
     }
 
 

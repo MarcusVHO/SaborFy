@@ -27,9 +27,7 @@ public class CustomerPhoneController {
             @Valid @RequestParam Long customerId,
             @Valid @RequestBody CreatePhoneRequest request
     ) {
-        CustomerPhone customerPhone = phoneService.create(user, customerId, request);
-        PhoneDTO phoneDTO = new PhoneDTO(customerPhone);
-        return ResponseEntity.status(HttpStatus.CREATED).body(phoneDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(phoneService.create(user, customerId, request));
 
     }
 

@@ -1,6 +1,5 @@
 package com.br.marcus.saborfy.domain.order.dto.request;
 
-import com.br.marcus.saborfy.domain.payment.dto.request.CreatePaymentRequest;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,7 +9,6 @@ public record CreateOrderRequest(
         @NotNull(message = "Customer id is necessary!") Long customerId,
         @NotNull(message = "Address is necessary!") Long addressId,
         String observation,
-        @NotEmpty(message = "Item is necessary for create a new order!") List<CreateOrderItemRequest> items,
-        List<CreatePaymentRequest> payments
+        @NotEmpty(message = "Item is necessary for create a new order!") List<CreateOrderItemRequest> items
 ) {
 }
