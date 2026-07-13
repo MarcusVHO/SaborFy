@@ -7,7 +7,7 @@ public record ItemMenuResponse (
      String name,
      BigDecimal price,
      String description,
-     String createBy,
+     String createdBy,
      String latestUpdateBy,
      Instant createdAt
 ) {}
