@@ -2,84 +2,70 @@ package com.br.marcus.saborfy.domain.menu.service.impl;
 
 import com.br.marcus.saborfy.domain.menu.dto.request.CreateItemMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.request.UpdateItemMenuRequest;
+import com.br.marcus.saborfy.domain.menu.dto.response.ItemMenuResponse;
 import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
 import com.br.marcus.saborfy.domain.menu.entity.Menu;
+import com.br.marcus.saborfy.domain.menu.mapper.MenuItemMapper;
+import com.br.marcus.saborfy.domain.menu.query.MenuFinder;
+import com.br.marcus.saborfy.domain.menu.query.MenuItemFinder;
 import com.br.marcus.saborfy.domain.menu.repository.ItemMenuRepository;
-import com.br.marcus.saborfy.domain.menu.repository.MenuRepository;
 import com.br.marcus.saborfy.domain.menu.service.MenuItemService;
-import com.br.marcus.saborfy.domain.user.entity.User;
-import com.br.marcus.saborfy.exceptions.ItemNotFoundException;
-import com.br.marcus.saborfy.exceptions.MenuMismatchException;
-import com.br.marcus.saborfy.exceptions.MenuNotFoundException;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MenuItemServiceImpl implements MenuItemService {
-    private final MenuRepository menuRepository;
+    private final MenuItemFinder finder;
     private final ItemMenuRepository itemMenuRepository;
+    private final MenuFinder menuFinder;
+    private final MenuItemMapper mapper;
 
-    public MenuItemServiceImpl(MenuRepository menuRepository, ItemMenuRepository itemMenuRepository) {
-        this.menuRepository = menuRepository;
+    public MenuItemServiceImpl(MenuItemFinder finder, ItemMenuRepository itemMenuRepository, MenuFinder menuFinder, MenuItemMapper mapper) {
+        this.finder = finder;
         this.itemMenuRepository = itemMenuRepository;
+        this.menuFinder = menuFinder;
+        this.mapper = mapper;
     }
 
     @Override
-    public ItemMenu createItemMenu(AuthenticatedUser user, CreateItemMenuRequest request, Long menuId) {
-        Menu menu = menuRepository.findById(menuId).orElseThrow(MenuNotFoundException::new);
-        menu.setId(menuId);
-
-        User currentUser = new User();
-        currentUser.setId(user.id());
-
-        ItemMenu newItemMenu = new ItemMenu();
-        newItemMenu.setMenu(menu);
-        newItemMenu.setUser(currentUser);
-        newItemMenu.setName(request.name());
-        newItemMenu.setPrice(request.price());
-        newItemMenu.setDescription(request.description());
-
+    @Transactional
+    public ItemMenuResponse createItemMenu(AuthenticatedUser user, CreateItemMenuRequest request, Long menuId) {
+        Menu menu = menuFinder.findEntityById(menuId);
+        ItemMenu newItemMenu = new ItemMenu(
+                request.name(),
+                request.price(),
+                request.description(),
+                user.id(),
+                menu
+        );
         itemMenuRepository.save(newItemMenu);
-        return newItemMenu;
+        return mapper.ToResponse(newItemMenu);
     }
 
     @Override
+    @Transactional
     public void deleteItemMenu(Long menuId, Long itemId) {
-        ItemMenu itemMenu = itemMenuRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
-
-        if(!itemMenu.getMenu().getId().equals(menuId)) {
-            throw new MenuMismatchException("Item does not belong to this menu!");
-        }
-
+        ItemMenu itemMenu = finder.findEntityById(menuId);
         itemMenuRepository.delete(itemMenu);
     }
 
     @Override
-    public ItemMenu updateItemMenu(AuthenticatedUser user, UpdateItemMenuRequest request, Long itemId, Long menuId) {
-        ItemMenu itemMenu = itemMenuRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
-
-        if(!itemMenu.getMenu().getId().equals(menuId)) {
-            throw new MenuMismatchException("Item does not belong to this menu!");
-        }
-        User currentUser = new User();
-        currentUser.setId(user.id());
+    @Transactional
+    public ItemMenuResponse updateItemMenu(AuthenticatedUser user, UpdateItemMenuRequest request, Long itemId, Long menuId) {
+        ItemMenu itemMenu = finder.findEntityById(menuId);
 
         if(request.name() != null) {
-            itemMenu.setName(request.name());
-            itemMenu.setLatestUpdateBy(currentUser);
+            itemMenu.changeName(request.name(), user.id());
         }
 
         if(request.price() != null) {
-            itemMenu.setPrice(request.price());
-            itemMenu.setLatestUpdateBy(currentUser);
+            itemMenu.changePrice(request.price(), user.id());
         }
 
         if(request.description() != null) {
-            itemMenu.setDescription(request.description());
-            itemMenu.setLatestUpdateBy(currentUser);
+            itemMenu.changeDescription(request.description(), user.id());
         }
-
-        itemMenuRepository.save(itemMenu);
-        return itemMenu;
+        return mapper.ToResponse(itemMenu);
     }
 }

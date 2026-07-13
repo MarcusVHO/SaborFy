@@ -2,9 +2,7 @@ package com.br.marcus.saborfy.domain.menu.controller;
 
 import com.br.marcus.saborfy.domain.menu.dto.request.CreateItemMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.request.UpdateItemMenuRequest;
-import com.br.marcus.saborfy.domain.menu.dto.response.CreateItemMenuResponse;
 import com.br.marcus.saborfy.domain.menu.dto.response.ItemMenuResponse;
-import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
 import com.br.marcus.saborfy.domain.menu.service.impl.MenuItemServiceImpl;
 import com.br.marcus.saborfy.infra.security.authenticated.AuthenticatedUser;
 import jakarta.validation.Valid;
@@ -24,14 +22,12 @@ public class ItemMenuController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateItemMenuResponse> create(
+    public ResponseEntity<ItemMenuResponse> create(
             @AuthenticationPrincipal AuthenticatedUser user,
             @Valid @RequestBody CreateItemMenuRequest request,
             @Valid @RequestParam @NotNull(message = "It is necessary to reference a menu!") Long menuId
             ) {
-        ItemMenu itemMenu = menuItemService.createItemMenu(user, request, menuId);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CreateItemMenuResponse(itemMenu));
+        return ResponseEntity.status(HttpStatus.CREATED).body(menuItemService.createItemMenu(user, request, menuId));
     }
 
 
@@ -51,7 +47,6 @@ public class ItemMenuController {
             @RequestParam Long id,
             @RequestBody UpdateItemMenuRequest request
     ) {
-        ItemMenu itemMenu = menuItemService.updateItemMenu(user, request, id, menuId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ItemMenuResponse(itemMenu));
+        return ResponseEntity.status(HttpStatus.CREATED).body( menuItemService.updateItemMenu(user, request, id, menuId));
     }
 }

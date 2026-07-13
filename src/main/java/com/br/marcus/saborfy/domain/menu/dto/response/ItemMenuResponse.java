@@ -1,29 +1,14 @@
 package com.br.marcus.saborfy.domain.menu.dto.response;
-
-import com.br.marcus.saborfy.domain.menu.entity.ItemMenu;
-import lombok.Getter;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Getter
-public class ItemMenuResponse {
-    private final Long id;
-    private final String name;
-    private final BigDecimal price;
-    private final String description;
-    private final String createBy;
-    private String latestUpdateBy;
-    private final Instant createdAt;
+public record ItemMenuResponse (
+     Long id,
+     String name,
+     BigDecimal price,
+     String description,
+     String createBy,
+     String latestUpdateBy,
+     Instant createdAt
+) {}
 
-
-    public ItemMenuResponse(ItemMenu menuItem) {
-        this.id = menuItem.getId();
-        this.name = menuItem.getName();
-        this.price = menuItem.getPrice();
-        this.description = menuItem.getDescription();
-        this.createBy = menuItem.getUser().getName();
-        if(menuItem.getLatestUpdateBy()!= null) { this.latestUpdateBy = menuItem.getLatestUpdateBy().getName();}
-        this.createdAt = menuItem.getCreatedAt();
-    }
-}
