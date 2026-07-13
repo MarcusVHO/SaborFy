@@ -2,6 +2,7 @@ package com.br.marcus.saborfy.domain.menu.controller;
 
 import com.br.marcus.saborfy.domain.menu.dto.request.CreateItemMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.request.CreateMenuRequest;
+import com.br.marcus.saborfy.domain.menu.dto.request.UpdateMenuRequest;
 import com.br.marcus.saborfy.domain.menu.dto.response.CreateMenuResponse;
 import com.br.marcus.saborfy.domain.menu.dto.response.MenuResponse;
 import com.br.marcus.saborfy.domain.menu.entity.Menu;
@@ -48,7 +49,7 @@ public class MenuController {
     @PutMapping
     public ResponseEntity<MenuResponse> update(
             @AuthenticationPrincipal AuthenticatedUser user,
-            @Valid @RequestBody CreateMenuRequest request,
+            @Valid @RequestBody UpdateMenuRequest request,
             @NotNull @RequestParam Long id
 
     ) {

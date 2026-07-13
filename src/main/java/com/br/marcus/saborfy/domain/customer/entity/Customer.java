@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Customer {
 
     public Customer(String name, String createdBy) {
-        if (name.isBlank() || createdBy.isBlank() || latestUpdatedBy.isBlank()) {
+        if (name.isBlank() || createdBy.isBlank()) {
             throw new IllegalArgumentException("Name or created by by must not be null or blank!");
         }
         this.name = name;
