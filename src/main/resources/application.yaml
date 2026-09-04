@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: template
+
+  jpa:
+    hibernate:
+      ddl-auto:
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr(%-5level) %clr([%thread]){faint} %clr(%logger{36}){cyan} - %msg%n"
