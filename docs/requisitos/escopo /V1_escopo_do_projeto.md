@@ -1,3 +1,4 @@
+#Version 1.0 - 05/09/2026
 # Escopo do Projeto — Saborfy
 
 ## 1. Visão Geral
