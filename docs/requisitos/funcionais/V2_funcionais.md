@@ -91,13 +91,11 @@
 
 ## 9. Pedidos Prontos e Notificações
 
-| ID | Requisito | Prioridade |
-|---|---|---|
+| ID         | Requisito                                                                                    | Prioridade |
+|------------|----------------------------------------------------------------------------------------------|---|
 | RF-NOT-001 | O sistema deve permitir que funcionários autorizados visualizem os pedidos que estão prontos. | Essencial |
-| RF-NOT-002 | O sistema deve notificar os funcionários responsáveis quando um pedido estiver pronto. | Essencial |
-| RF-NOT-003 | O sistema deve utilizar notificações do navegador para informar sobre pedidos prontos. | Importante |
-| RF-NOT-004 | O sistema deve disponibilizar uma central de notificações dentro da aplicação. | Importante |
-| RF-NOT-005 | O sistema deve permitir que o funcionário registre que o pedido foi entregue à mesa. | Essencial |
+| RF-NOT-002 | O sistema deve manter atualizado a tela de pedidos.                                          | Essencial |
+| RF-NOT-003 | O sistema deve permitir que o funcionário registre que o pedido foi entregue à mesa.         | Essencial |
 
 ## 10. Pagamentos
 
