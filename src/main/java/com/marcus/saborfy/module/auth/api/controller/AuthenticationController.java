@@ -46,7 +46,7 @@ public class AuthenticationController {
             ),
             @ApiResponse(
                     responseCode = "401",
-                    description = "Invalid username or password"
+                    description = "Invalid registration or password"
             )
     })
     @PostMapping("/login")

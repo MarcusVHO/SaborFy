@@ -7,7 +7,7 @@ public record UserResponse(
     Long id,
     Long restaurantId,
     String username,
-    List<String> role,
+    String role,
     boolean active,
     Instant createdAt,
     Instant updatedAt

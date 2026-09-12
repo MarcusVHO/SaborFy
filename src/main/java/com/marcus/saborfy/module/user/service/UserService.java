@@ -1,9 +1,9 @@
 package com.marcus.saborfy.module.user.service;
 
+import com.marcus.saborfy.shared.exception.ForbiddenOperationException;
 import com.marcus.saborfy.shared.exception.RoleNotFoundException;
 import com.marcus.saborfy.shared.exception.UserAlreadyExistsException;
 import com.marcus.saborfy.shared.exception.UserNotFoundException;
-import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
 import com.marcus.saborfy.module.user.entity.Role;
@@ -31,33 +31,38 @@ public class UserService  {
         this.mapper = mapper;
     }
 
-    public UserResponse register(RegisterUserRequest request, Long companyId) {
-        log.info("Initializing user register.");
-        if (repository.existsByUsername(request.username())) {
+    public UserResponse register(RoleName currentUserRole, RegisterUserRequest request, Long companyId) {
+        if (repository.existsByRegistration(request.registration())) {
             throw new UserAlreadyExistsException();
         }
-        Role role = roleRepository.findByName(RoleName.WAITER).orElseThrow();
+        validateRolePermission(currentUserRole, request.role());
         User user = User.create(
                 companyId,
-                request.username(),
+                request.registration(),
                 passwordEncoder.encode(request.password()),
-                role
+                request.name(),
+                roleRepository.findByName(request.role()).orElseThrow(RoleNotFoundException::new)
         );
         User savedUser = repository.save(user);
-        log.info(
-                "User registered successfully. userId={}, restaurantId={}",
-                savedUser.getId(),
-                savedUser.getRestaurantId()
-        );
-
         return mapper.entityToUserResponse(savedUser);
     }
 
-    public UserResponse addRole(Long userId, AddRoleRequest request) {
+    public UserResponse addRole(RoleName currentUserRole,Long userId, RoleName newRole) {
         User user = repository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Role role = roleRepository.findByName(request.roleName()).orElseThrow(RoleNotFoundException::new);
+        validateRolePermission(currentUserRole, newRole);
+        Role role = roleRepository.findByName(newRole).orElseThrow(RoleNotFoundException::new);
+        validateRolePermission(currentUserRole, user.getRole().getName());
         user.addRole(role);
         repository.save(user);
         return mapper.entityToUserResponse(user);
+    }
+
+    private void validateRolePermission(
+            RoleName currentUserRole,
+            RoleName newRole
+    ) {
+        if (currentUserRole.canManager(newRole)) {
+            throw new ForbiddenOperationException();
+        }
     }
 }

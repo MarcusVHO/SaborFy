@@ -16,7 +16,7 @@ public class FindUserForAuthenticationService implements UserAuthenticationQuery
     private final UserMapper mapper;
 
     public AuthenticationUserDataResponse findByUsername(String username) {
-        return userRepository.findByUsername(username)
+        return userRepository.findByRegistration(username)
                 .map(mapper::entityToAuthenticationUserDataResponse).orElseThrow(UserNotFoundException::new);
     }
 }

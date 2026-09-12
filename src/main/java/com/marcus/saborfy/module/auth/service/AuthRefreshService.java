@@ -39,7 +39,7 @@ public class AuthRefreshService {
         String newToken = tokenGenerator.generateToken(userResponse.id(), userResponse.restaurantId(), userResponse.role());
         String newRefreshToken = tokenGenerator.generateRefreshToken(userResponse.id(), userResponse.restaurantId());
         log.info(
-                "Refresh successful for username={}",
+                "Refresh successful for registration={}",
                 userResponse.username()
         );
         refreshTokenManager.create(userResponse.id(), newRefreshToken);

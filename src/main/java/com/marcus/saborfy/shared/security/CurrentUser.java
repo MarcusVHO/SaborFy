@@ -1,12 +1,18 @@
 package com.marcus.saborfy.shared.security;
 
+import com.marcus.saborfy.module.user.enuns.RoleName;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
 
 public record CurrentUser(
         Long id,
         Long companyId,
-        List<SimpleGrantedAuthority> roles
-){
+        SimpleGrantedAuthority role
+) {
+
+    public RoleName getHighestRole() {
+        return RoleName.valueOf(
+                role.getAuthority().replace("ROLE_", "")
+        );
+    }
 }

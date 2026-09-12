@@ -43,8 +43,9 @@ public class AuthLoginService {
         String refreshToken = tokenGenerator.generateRefreshToken(authenticationUser.id(), authenticationUser.restaurantId());
         refreshTokenManager.create(authenticationUser.id(), refreshToken);
         log.info(
-                "Login successful for username={}",
-                command.username()
+                "Login successful for registration={} role={}",
+                command.username(),
+                authenticationUser.role()
         );
         return new LoginResponse(token, refreshToken);
     }

@@ -4,9 +4,13 @@ CREATE TABLE users (
    restaurant_id BIGINT NOT NULL,
    registration VARCHAR(100) NOT NULL,
    password_hash VARCHAR(255) NOT NULL,
+   role_id BIGINT,
    active BOOLEAN NOT NULL DEFAULT TRUE,
    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
    updated_at TIMESTAMP WITH TIME ZONE,
 
-   CONSTRAINT uk_users_username UNIQUE (registration)
+   CONSTRAINT uk_users_username UNIQUE (registration),
+   CONSTRAINT fk_users_role
+        FOREIGN KEY (role_id)
+        REFERENCES role(id)
 );

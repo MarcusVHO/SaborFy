@@ -6,14 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 @Entity
 @Getter
@@ -40,12 +40,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_role",
-        joinColumns = @JoinColumn(name =  "users_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> role = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     @Column(nullable = false)
     private boolean active = true;
@@ -61,7 +58,7 @@ public class User implements UserDetails {
 
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
-        return role;
+        return Collections.singleton(role);
     }
 
     @Override
@@ -70,6 +67,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @NullMarked
     public String getUsername() {
         return registration;
     }
@@ -95,11 +93,12 @@ public class User implements UserDetails {
     }
 
 
-    public static User create(Long restaurantId, String registration, String passwordHash, Role role) {
+    public static User create(Long restaurantId, String registration, String passwordHash, String name, Role role) {
         return new User(
                 restaurantId,
                 registration,
                 passwordHash,
+                name,
                 role
         );
     }
@@ -108,15 +107,16 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long restaurantId, String registration, String passwordHash, Role role) {
+    public User(Long restaurantId, String registration, String passwordHash, String name, Role role) {
         this.restaurantId = restaurantId;
         this.registration = registration;
         this.passwordHash = passwordHash;
+        this.name = name;
         this.addRole(role);
         this.updatedAt = Instant.now();
     }
 
     public void addRole(Role role) {
-        this.role.add(role);
+        this.role = role;
     }
 }
