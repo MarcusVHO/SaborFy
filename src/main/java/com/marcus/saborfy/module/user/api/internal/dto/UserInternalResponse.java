@@ -7,7 +7,7 @@ import java.util.List;
 
 public record UserInternalResponse (
         Long id,
-        Long companyId,
+        Long restaurantId,
         String username,
         List<SimpleGrantedAuthority> role,
         boolean active,

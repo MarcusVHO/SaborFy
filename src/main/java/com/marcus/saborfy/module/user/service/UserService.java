@@ -45,7 +45,7 @@ public class UserService  {
         );
         User savedUser = repository.save(user);
         log.info(
-                "User registered successfully. userId={}, companyId={}",
+                "User registered successfully. userId={}, restaurantId={}",
                 savedUser.getId(),
                 savedUser.getRestaurantId()
         );

@@ -45,7 +45,7 @@ public class TokenConfig {
 
             return JWT.create()
                     .withClaim("id", userId)
-                    .withClaim("companyId", companyId)
+                    .withClaim("restaurantId", companyId)
                     .withClaim("role", roleNames)
                     .withExpiresAt(genExpirationDate(1))
                     .withIssuedAt(Instant.now())
@@ -63,7 +63,7 @@ public class TokenConfig {
 
             return JWT.create()
                     .withClaim("id", userId)
-                    .withClaim("companyId", companyId)
+                    .withClaim("restaurantId", companyId)
                     .withExpiresAt(genExpirationDate(5))
                     .withIssuedAt(Instant.now())
                     .sign(algorithm);
@@ -88,7 +88,7 @@ public class TokenConfig {
 
             return Optional.of(UserPayloadData.builder()
                     .id(decode.getClaim("id").asLong())
-                    .companyId(decode.getClaim("companyId").asLong())
+                    .companyId(decode.getClaim("restaurantId").asLong())
                     .role(authorities)
                     .build()
             );
