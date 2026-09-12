@@ -1,6 +1,9 @@
 package com.marcus.saborfy.module.user.enuns;
 
 public enum RoleName {
-    USER,
-    ADMIN
+    WAITER,
+    TELLER,
+    ADMIN,
+    SYSTEM_ADMIN,
+    OWNER
 }
