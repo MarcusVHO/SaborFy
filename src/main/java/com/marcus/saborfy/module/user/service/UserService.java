@@ -36,7 +36,7 @@ public class UserService  {
         if (repository.existsByUsername(request.username())) {
             throw new UserAlreadyExistsException();
         }
-        Role role = roleRepository.findByName(RoleName.USER).orElseThrow();
+        Role role = roleRepository.findByName(RoleName.WAITER).orElseThrow();
         User user = User.create(
                 companyId,
                 request.username(),
@@ -45,9 +45,9 @@ public class UserService  {
         );
         User savedUser = repository.save(user);
         log.info(
-                "User registered successfully. userId={}, companyId={}",
+                "User registered successfully. userId={}, restaurantId={}",
                 savedUser.getId(),
-                savedUser.getCompanyId()
+                savedUser.getRestaurantId()
         );
 
         return mapper.entityToUserResponse(savedUser);

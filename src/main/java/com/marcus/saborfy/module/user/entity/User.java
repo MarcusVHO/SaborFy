@@ -1,5 +1,6 @@
 package com.marcus.saborfy.module.user.entity;
 
+import com.marcus.saborfy.module.user.enuns.RoleName;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -24,19 +24,27 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
-    private Long companyId;
+    private Long restaurantId;
 
+    @Setter
     @Column(nullable = false)
-    private String username;
+    private String registration;
 
+    @Setter
     @Column(nullable = false)
     private String passwordHash;
 
+    @Setter
+    @Column(nullable = false)
+    private String name;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_role",
-    joinColumns = @JoinColumn(name =  "users_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+        joinColumns = @JoinColumn(name =  "users_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> role = new ArrayList<>();
 
     @Column(nullable = false)
@@ -46,8 +54,10 @@ public class User implements UserDetails {
     @CreationTimestamp
     private Instant createdAt;
 
+    @Setter
     @Column(nullable = false, name = "updated_at")
     private Instant updatedAt;
+
 
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,6 +67,11 @@ public class User implements UserDetails {
     @Override
     public @Nullable String getPassword() {
         return "";
+    }
+
+    @Override
+    public String getUsername() {
+        return registration;
     }
 
     @Override
@@ -80,14 +95,25 @@ public class User implements UserDetails {
     }
 
 
-    public static User create(Long companyId, String username, String passwordHash, Role role) {
-        User newUser = new User();
-        newUser.setCompanyId(companyId);
-        newUser.setUsername(username);
-        newUser.setPasswordHash(passwordHash);
-        newUser.role.add(role);
-        newUser.setUpdatedAt(Instant.now());
-        return newUser;
+    public static User create(Long restaurantId, String registration, String passwordHash, Role role) {
+        return new User(
+                restaurantId,
+                registration,
+                passwordHash,
+                role
+        );
+    }
+
+    public User() {
+
+    }
+
+    public User(Long restaurantId, String registration, String passwordHash, Role role) {
+        this.restaurantId = restaurantId;
+        this.registration = registration;
+        this.passwordHash = passwordHash;
+        this.addRole(role);
+        this.updatedAt = Instant.now();
     }
 
     public void addRole(Role role) {

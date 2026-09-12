@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new UserData(
                 user.id(),
-                user.companyId(),
+                user.restaurantId(),
                 user.username(),
                 user.passwordHash(),
                 user.role(),

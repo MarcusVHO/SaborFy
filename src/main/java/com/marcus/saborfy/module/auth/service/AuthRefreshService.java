@@ -36,8 +36,8 @@ public class AuthRefreshService {
         refreshTokenEntity.revoke();
         refreshTokenManager.save(refreshTokenEntity);
 
-        String newToken = tokenGenerator.generateToken(userResponse.id(), userResponse.companyId(), userResponse.role());
-        String newRefreshToken = tokenGenerator.generateRefreshToken(userResponse.id(), userResponse.companyId());
+        String newToken = tokenGenerator.generateToken(userResponse.id(), userResponse.restaurantId(), userResponse.role());
+        String newRefreshToken = tokenGenerator.generateRefreshToken(userResponse.id(), userResponse.restaurantId());
         log.info(
                 "Refresh successful for username={}",
                 userResponse.username()

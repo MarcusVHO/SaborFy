@@ -39,8 +39,8 @@ public class AuthLoginService {
             throw new InvalidCredentialException();
         }
 
-        String token = tokenGenerator.generateToken(authenticationUser.id(), authenticationUser.companyId(), authenticationUser.role());
-        String refreshToken = tokenGenerator.generateRefreshToken(authenticationUser.id(), authenticationUser.companyId());
+        String token = tokenGenerator.generateToken(authenticationUser.id(), authenticationUser.restaurantId(), authenticationUser.role());
+        String refreshToken = tokenGenerator.generateRefreshToken(authenticationUser.id(), authenticationUser.restaurantId());
         refreshTokenManager.create(authenticationUser.id(), refreshToken);
         log.info(
                 "Login successful for username={}",

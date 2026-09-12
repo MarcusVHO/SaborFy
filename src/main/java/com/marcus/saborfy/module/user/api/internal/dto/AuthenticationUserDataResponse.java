@@ -7,7 +7,7 @@ import java.util.List;
 
 public record AuthenticationUserDataResponse(
         Long id,
-        Long companyId,
+        Long restaurantId,
         String username,
         String passwordHash,
         List<SimpleGrantedAuthority> role,
@@ -16,3 +16,4 @@ public record AuthenticationUserDataResponse(
         Instant updatedAt
 ) {
 }
+

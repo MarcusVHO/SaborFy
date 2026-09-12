@@ -5,7 +5,7 @@ import java.util.List;
 
 public record UserResponse(
     Long id,
-    Long companyId,
+    Long restaurantId,
     String username,
     List<String> role,
     boolean active,
