@@ -338,7 +338,29 @@ A integração com WhatsApp adicionaria complexidade ao MVP e não é necessári
 A arquitetura deverá permitir uma futura integração com serviços externos sem exigir uma reconstrução completa do sistema.
 
 ---
+## DP11 — Decisão de trocar o sistema de mesas por um sistema de seção
+**Data:** 11/10/2026  
+**Status:** Aprovada
 
+### Contexto 
+O sistema de mesas deixa o contexto muito nichado.
+
+### Decisão 
+Trocar o sistema de mesas por um sistema de seções que a princípio tem o mesmo propósito.
+
+## Alternativas consideradas
+
+- Manter sistema de mesas 
+- Substituir por sistema de seções
+
+### Motivo
+Manter o sistema de seções pode ser nichado demais para alguns tipos de estabelecimentos.
+
+### Impacto
+
+Nenhum impacto significativo a primeira instância 
+
+---
 # 4. Status das Decisões
 
 As decisões podem possuir os seguintes status:
