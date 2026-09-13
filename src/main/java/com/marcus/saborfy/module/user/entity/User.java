@@ -63,7 +63,7 @@ public class User implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return getPasswordHash();
     }
 
     @Override
@@ -118,5 +118,9 @@ public class User implements UserDetails {
 
     public void addRole(Role role) {
         this.role = role;
+    }
+
+    public RoleName getRoleName() {
+        return role.getName();
     }
 }

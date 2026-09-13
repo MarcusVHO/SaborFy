@@ -29,8 +29,6 @@ public class AuthLoginService {
     @Transactional
     public LoginResponse execute(LoginRequest command) {
         AuthenticationUserDataResponse authenticationUser = userAuthenticationQuery.findByUsername(command.username());
-
-
         if (!authenticationUser.active()
             || !passwordVerifier.matches(
                 command.password(),

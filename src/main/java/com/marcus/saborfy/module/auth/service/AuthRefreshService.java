@@ -24,9 +24,9 @@ public class AuthRefreshService {
 
     public LoginResponse refreshTokens(String refreshToken) {
         Long id = tokenGenerator.validate(refreshToken);
-        log.debug("Refresh token payload is not null for user id={}", id);
+        log.debug("Refresh token payload is not null for user userId={}", id);
         RefreshToken refreshTokenEntity = refreshTokenManager.findByRawToken(refreshToken);
-        log.debug("Refresh token exists in database id={}", id);
+        log.debug("Refresh token exists in database userId={}", id);
 
         if (!refreshTokenEntity.isValid()) {
             throw new InvalidRefreshTokenException();
