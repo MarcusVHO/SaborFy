@@ -32,16 +32,6 @@ public class UserController {
     }
 
 
-    @Operation(
-            summary = "Create a new user in application",
-            description = "Create a new user. "
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "User created"
-            ),
-    })
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> listUsers(
@@ -54,16 +44,6 @@ public class UserController {
     }
 
 
-    @Operation(
-            summary = "Create a new user in application",
-            description = "Create a new user. "
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "User created"
-            ),
-    })
     @GetMapping
     @PreAuthorize("hasRole('WAITER')")
     public ResponseEntity<Page<UserResponse>> listUsers(
