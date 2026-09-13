@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.query;
+package com.marcus.saborfy.module.user.query;
 
 import com.marcus.saborfy.shared.exception.UserNotFoundException;
 import com.marcus.saborfy.module.user.api.internal.dto.AuthenticationUserDataResponse;

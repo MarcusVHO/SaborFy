@@ -1,9 +1,9 @@
-package com.marcus.saborfy.module.query;
+package com.marcus.saborfy.module.user.query;
 
 import com.marcus.saborfy.module.user.api.internal.contract.UserQueryApi;
 import com.marcus.saborfy.module.user.api.internal.dto.UserInternalResponse;
 import com.marcus.saborfy.module.user.mapper.UserMapper;
-import com.marcus.saborfy.module.finder.UserFinder;
+import com.marcus.saborfy.module.user.finder.UserFinder;
 import org.springframework.stereotype.Service;
 
 @Service

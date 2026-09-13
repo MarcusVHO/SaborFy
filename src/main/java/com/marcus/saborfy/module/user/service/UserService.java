@@ -1,6 +1,6 @@
 package com.marcus.saborfy.module.user.service;
 
-import com.marcus.saborfy.module.finder.UserFinder;
+import com.marcus.saborfy.module.user.finder.UserFinder;
 import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
 import com.marcus.saborfy.shared.exception.*;
@@ -95,6 +95,7 @@ public class UserService  {
 
     }
 
+    //Enable and disable user
     public void changeEnableUserUseCase(CurrentUser currentUser, Long userId, boolean state) {
         User user = finder.findEntityByIdOrThrow(userId);
         validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
