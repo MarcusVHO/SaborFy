@@ -44,5 +44,6 @@ jobs:
               -e DB_DATABASE=${{secrets.DB_DATABASE}} \
               -e DB_USERNAME=${{secrets.DB_USERNAME}} \
               -e DB_PASSWORD=${{secrets.DB_PASSWORD}} \
+              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e TOKEN_SECRET=${{secrets.TOKEN_SECRET}} \
               marcusxyz5/saborfy:latest
