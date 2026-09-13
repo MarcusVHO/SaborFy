@@ -70,6 +70,7 @@ public class UserService  {
         return mapper.entityToUserResponse(user);
     }
 
+    // Get list users in database
     public Page<UserResponse> getPageUserUseCase(String searchText, RoleName roleName, Long restaurantId, Pageable pageable) {
         searchText = searchText == null ? "" : searchText;
         Long roleId = roleName != null
@@ -78,6 +79,7 @@ public class UserService  {
         return repository.findAllUsers(searchText, roleId, pageable, restaurantId);
     }
 
+    // Change role of determined user in system
     public void changePasswordUseCase(CurrentUser currentUser, ChangePasswordRequest request) {
         User user = finder.findEntityByIdOrThrow(request.userId());
         validateRestaurant(currentUser.companyId(), user.getRestaurantId());
@@ -91,6 +93,18 @@ public class UserService  {
         System.out.println(passwordEncoder.matches(request.newPassword(), user.getPasswordHash()));
         repository.save(user);
 
+    }
+
+    public void changeEnableUserUseCase(CurrentUser currentUser, Long userId, boolean state) {
+        User user = finder.findEntityByIdOrThrow(userId);
+        validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
+        validateRestaurant(currentUser.companyId(), user.getRestaurantId());
+        if (state) {
+            user.enable();
+        } else {
+            user.disable();
+        }
+        repository.save(user);
     }
 
     private void changePassword(String password, String newPassword, User user, User userRequesting) {

@@ -61,4 +61,24 @@ public class UserController {
         service.changePasswordUseCase(currentUser, request);
         return null;
     }
+
+    @DeleteMapping("/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deactivationUser(
+            @AuthenticationPrincipal CurrentUser user,
+            @PathVariable Long userId
+    ) {
+        service.changeEnableUserUseCase(user, userId, false);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/enable/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> enableUser(
+            @AuthenticationPrincipal CurrentUser user,
+            @PathVariable Long userId
+    ) {
+        service.changeEnableUserUseCase(user, userId, true);
+        return ResponseEntity.noContent().build();
+    }
 }

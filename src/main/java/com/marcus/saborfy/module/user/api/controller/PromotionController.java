@@ -28,11 +28,7 @@ public class PromotionController {
             @RequestBody @Valid AddRoleRequest request
             ) {
         return ResponseEntity.ok().body(
-                service.addRoleUseCase(
-                    user.getHighestRole(),
-                    id,
-                    request.roleName()
-                )
+                service.addRoleUseCase(user, id, request)
         );
     }
 

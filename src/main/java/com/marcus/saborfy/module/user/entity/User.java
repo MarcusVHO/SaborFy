@@ -89,7 +89,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return active;
     }
 
 
@@ -122,5 +122,13 @@ public class User implements UserDetails {
 
     public RoleName getRoleName() {
         return role.getName();
+    }
+
+    public void disable() {
+        this.active = false;
+    }
+
+    public void enable() {
+        this.active = true;
     }
 }
