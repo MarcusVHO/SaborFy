@@ -36,6 +36,7 @@ jobs:
           script: |
             docker pull marcusxyz5/saborfy:latest
             docker stop saborfy
+            docker rm -f saborfy-api 2>/dev/null || true
             docker run -d \
               --name saborfy \
               -p 8085:8080 \
