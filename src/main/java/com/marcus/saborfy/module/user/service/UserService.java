@@ -1,6 +1,7 @@
 package com.marcus.saborfy.module.user.service;
 
 import com.marcus.saborfy.module.finder.UserFinder;
+import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
 import com.marcus.saborfy.shared.exception.*;
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
@@ -58,11 +59,12 @@ public class UserService  {
 
     //  Register change role of user in system
     @Transactional
-    public UserResponse addRoleUseCase(RoleName currentUserRole, Long userId, RoleName newRole) {
+    public UserResponse addRoleUseCase(CurrentUser currentUser, Long userId, AddRoleRequest request) {
         User user = repository.findById(userId).orElseThrow(UserNotFoundException::new);
-        validateRolePermission(currentUserRole, newRole);
-        Role role = roleRepository.findByName(newRole).orElseThrow(RoleNotFoundException::new);
-        validateRolePermission(currentUserRole, user.getRoleName());
+        validateRolePermission(currentUser.getHighestRole(), request.roleName());
+        validateRestaurant(currentUser.companyId(), user.getRestaurantId());
+        Role role = roleRepository.findByName(request.roleName()).orElseThrow(RoleNotFoundException::new);
+        validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
         user.addRole(role);
         repository.save(user);
         return mapper.entityToUserResponse(user);
@@ -78,6 +80,7 @@ public class UserService  {
 
     public void changePasswordUseCase(CurrentUser currentUser, ChangePasswordRequest request) {
         User user = finder.findEntityByIdOrThrow(request.userId());
+        validateRestaurant(currentUser.companyId(), user.getRestaurantId());
         if (currentUser.id().equals(request.userId())) {
             changePassword(request.password(), request.newPassword(), user, user);
         } else {
@@ -99,11 +102,18 @@ public class UserService  {
         }
         user.setPasswordHash(passwordEncoder.encode(newPassword.trim()));
     }
+
     private void validateRolePermission(
             RoleName currentUserRole,
             RoleName newRole
     ) {
         if (currentUserRole.canManager(newRole)) {
+            throw new ForbiddenOperationException();
+        }
+    }
+
+    private void validateRestaurant(Long currentRestaurantId, Long newRestaurantId) {
+        if (!currentRestaurantId.equals(newRestaurantId)) {
             throw new ForbiddenOperationException();
         }
     }
