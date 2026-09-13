@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service;
+package com.marcus.saborfy.module.finder;
 
 import com.marcus.saborfy.module.user.entity.User;
 import com.marcus.saborfy.module.user.mapper.UserMapper;

@@ -1,8 +1,8 @@
 package com.marcus.saborfy.module.user.api.controller;
 
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
+import com.marcus.saborfy.module.user.enuns.RoleName;
 import com.marcus.saborfy.shared.security.CurrentUser;
-import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
 import com.marcus.saborfy.module.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,8 +32,6 @@ public class UserController {
     }
 
 
-
-
     @Operation(
             summary = "Create a new user in application",
             description = "Create a new user. "
@@ -44,12 +44,34 @@ public class UserController {
     })
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> register (
+    public ResponseEntity<UserResponse> listUsers(
             @Valid @RequestBody RegisterUserRequest request,
             @AuthenticationPrincipal CurrentUser user
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 service.register(user.getHighestRole(),request, user.companyId())
         );
+    }
+
+
+    @Operation(
+            summary = "Create a new user in application",
+            description = "Create a new user. "
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "User created"
+            ),
+    })
+    @GetMapping
+    @PreAuthorize("hasRole('WAITER')")
+    public ResponseEntity<Page<UserResponse>> listUsers(
+            @RequestParam(required = false) String searchText,
+            @RequestParam(required = false) RoleName roleName,
+            Pageable pageable,
+            @AuthenticationPrincipal CurrentUser user
+            ) {
+        return ResponseEntity.ok().body(service.getPageUser(searchText, roleName, user.companyId(),pageable));
     }
 }

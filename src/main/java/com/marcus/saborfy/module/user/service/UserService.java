@@ -13,8 +13,13 @@ import com.marcus.saborfy.module.user.mapper.UserMapper;
 import com.marcus.saborfy.module.user.repository.RoleRepository;
 import com.marcus.saborfy.module.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -64,5 +69,13 @@ public class UserService  {
         if (currentUserRole.canManager(newRole)) {
             throw new ForbiddenOperationException();
         }
+    }
+
+    public Page<UserResponse> getPageUser(String searchText, RoleName roleName, Long restaurantId, Pageable pageable) {
+        searchText = searchText == null ? "" : searchText;
+        Long roleId = roleName != null
+                ? Objects.requireNonNull(roleRepository.findByName(roleName).orElse(null)).getId()
+                : null;
+        return repository.findAllUsers(searchText, roleId, pageable, restaurantId);
     }
 }
