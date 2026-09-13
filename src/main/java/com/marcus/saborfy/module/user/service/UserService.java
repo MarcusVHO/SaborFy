@@ -80,6 +80,7 @@ public class UserService  {
     }
 
     // Change role of determined user in system
+    @Transactional
     public void changePasswordUseCase(CurrentUser currentUser, ChangePasswordRequest request) {
         User user = finder.findEntityByIdOrThrow(request.userId());
         validateRestaurant(currentUser.companyId(), user.getRestaurantId());
@@ -105,6 +106,14 @@ public class UserService  {
         } else {
             user.disable();
         }
+        repository.save(user);
+    }
+
+    public void changeNameUseCase(CurrentUser currentUser, Long userId, String name) {
+        User user = finder.findEntityByIdOrThrow(userId);
+        validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
+        validateRestaurant(currentUser.companyId(), user.getRestaurantId());
+        user.update(name);
         repository.save(user);
     }
 

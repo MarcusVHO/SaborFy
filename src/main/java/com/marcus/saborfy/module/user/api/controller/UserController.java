@@ -81,4 +81,15 @@ public class UserController {
         service.changeEnableUserUseCase(user, userId, true);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{userId}/{name}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> updateName(
+            @AuthenticationPrincipal CurrentUser user,
+            @PathVariable Long userId,
+            @PathVariable String name
+    ) {
+        service.changeNameUseCase(user, userId, name);
+        return ResponseEntity.noContent().build();
+    }
 }

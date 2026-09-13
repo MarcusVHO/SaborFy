@@ -36,7 +36,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String passwordHash;
 
-    @Setter
     @Column(nullable = false)
     private String name;
 
@@ -130,5 +129,16 @@ public class User implements UserDetails {
 
     public void enable() {
         this.active = true;
+    }
+
+    public void setName(String name) {
+        this.name = name.trim();
+    }
+
+    public void update(String name) {
+        if (!name.isEmpty()) {
+            this.setName(name);
+        }
+        this.updatedAt = Instant.now();
     }
 }
