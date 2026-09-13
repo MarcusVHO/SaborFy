@@ -9,7 +9,7 @@ public record UserInternalResponse (
         Long id,
         Long restaurantId,
         String username,
-        List<SimpleGrantedAuthority> role,
+        SimpleGrantedAuthority role,
         boolean active,
         Instant createdAt,
         Instant updatedAt

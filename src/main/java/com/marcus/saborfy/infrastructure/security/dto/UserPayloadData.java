@@ -9,6 +9,6 @@ import java.util.List;
 public record UserPayloadData(
         Long id,
         Long companyId,
-        List<SimpleGrantedAuthority> role
+        SimpleGrantedAuthority role
 ) {
 }

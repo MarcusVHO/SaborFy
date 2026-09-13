@@ -5,15 +5,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 @Entity
 @Getter
@@ -36,16 +37,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String passwordHash;
 
-    @Setter
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_role",
-        joinColumns = @JoinColumn(name =  "users_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> role = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     @Column(nullable = false)
     private boolean active = true;
@@ -54,22 +51,23 @@ public class User implements UserDetails {
     @CreationTimestamp
     private Instant createdAt;
 
-    @Setter
+    @UpdateTimestamp
     @Column(nullable = false, name = "updated_at")
     private Instant updatedAt;
 
 
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
-        return role;
+        return Collections.singleton(role);
     }
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return getPasswordHash();
     }
 
     @Override
+    @NullMarked
     public String getUsername() {
         return registration;
     }
@@ -91,15 +89,15 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return active;
     }
 
-
-    public static User create(Long restaurantId, String registration, String passwordHash, Role role) {
+    public static User create(Long restaurantId, String registration, String passwordHash, String name, Role role) {
         return new User(
                 restaurantId,
                 registration,
                 passwordHash,
+                name,
                 role
         );
     }
@@ -108,15 +106,37 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long restaurantId, String registration, String passwordHash, Role role) {
+    public User(Long restaurantId, String registration, String passwordHash, String name, Role role) {
         this.restaurantId = restaurantId;
         this.registration = registration;
         this.passwordHash = passwordHash;
+        this.name = name;
         this.addRole(role);
-        this.updatedAt = Instant.now();
     }
 
     public void addRole(Role role) {
-        this.role.add(role);
+        this.role = role;
+    }
+
+    public RoleName getRoleName() {
+        return role.getName();
+    }
+
+    public void disable() {
+        this.active = false;
+    }
+
+    public void enable() {
+        this.active = true;
+    }
+
+    public void setName(String name) {
+        this.name = name.trim();
+    }
+
+    public void update(String name) {
+        if (!name.isEmpty()) {
+            this.setName(name);
+        }
     }
 }

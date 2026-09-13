@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public record UserData (
@@ -14,13 +15,13 @@ public record UserData (
         Long companyId,
         String username,
         String passwordHash,
-        List<SimpleGrantedAuthority> role,
+        SimpleGrantedAuthority role,
         boolean active
 
 ) implements UserDetails {
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
-        return role;
+        return Collections.singleton(role);
     }
 
     @Override

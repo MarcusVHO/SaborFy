@@ -13,8 +13,6 @@ public interface UserMapper {
     AuthenticationUserDataResponse entityToAuthenticationUserDataResponse(User user);
     UserResponse entityToUserResponse(User user);
     UserInternalResponse entityToUserInternalResponse(User user);
-
-
     default String roleToString(Role role) {
         return role == null ? null : role.getAuthority();
     }

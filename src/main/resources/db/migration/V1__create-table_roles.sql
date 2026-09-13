@@ -4,15 +4,6 @@ CREATE TABLE role(
 
 );
 
-CREATE TABLE users_role(
-    users_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
-
-    PRIMARY KEY (users_id, role_id),
-    CONSTRAINT USERS_ROLE_FK_USER FOREIGN KEY (users_id) REFERENCES users(id),
-    CONSTRAINT USERS_ROLE_FK_ROLE FOREIGN KEY (role_id) REFERENCES role(id)
-);
-
 INSERT INTO role(name) VALUES('WAITER');
 INSERT INTO role(name) VALUES('TELLER');
 INSERT INTO role(name) VALUES('ADMIN');

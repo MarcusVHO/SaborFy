@@ -34,13 +34,11 @@ public class TokenConfig {
     @Value("${app.jwt.secret}")
     private String secret;
 
-    public String generateToken(Long userId, Long companyId, List<SimpleGrantedAuthority> roles) {
+    public String generateToken(Long userId, Long companyId, SimpleGrantedAuthority roles) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            List<String> roleNames = roles.stream()
-                    .map(SimpleGrantedAuthority::getAuthority)
-                    .toList();
+            String roleNames = roles.getAuthority();
 
 
             return JWT.create()
@@ -81,10 +79,9 @@ public class TokenConfig {
                     .build()
                     .verify(token);
 
-            List<String> role = decode.getClaim("role").asList(String.class);
-            List<SimpleGrantedAuthority> authorities = role.stream()
-                    .map(SimpleGrantedAuthority::new)
-                    .toList();
+            String role = decode.getClaim("role").asString();
+            SimpleGrantedAuthority authorities = new SimpleGrantedAuthority(role);
+
 
             return Optional.of(UserPayloadData.builder()
                     .id(decode.getClaim("id").asLong())

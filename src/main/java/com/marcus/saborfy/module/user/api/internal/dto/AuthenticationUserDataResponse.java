@@ -10,7 +10,7 @@ public record AuthenticationUserDataResponse(
         Long restaurantId,
         String username,
         String passwordHash,
-        List<SimpleGrantedAuthority> role,
+        SimpleGrantedAuthority role,
         boolean active,
         Instant createdAt,
         Instant updatedAt

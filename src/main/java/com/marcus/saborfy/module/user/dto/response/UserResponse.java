@@ -1,13 +1,15 @@
 package com.marcus.saborfy.module.user.dto.response;
 
+import com.marcus.saborfy.module.user.enuns.RoleName;
+
 import java.time.Instant;
-import java.util.List;
 
 public record UserResponse(
     Long id,
     Long restaurantId,
-    String username,
-    List<String> role,
+    String registration,
+    String name,
+    RoleName role,
     boolean active,
     Instant createdAt,
     Instant updatedAt

@@ -14,8 +14,8 @@ public class OpenApiConfiguration {
     public OpenAPI hermesOpenApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Hermes API")
-                        .version("v1")
+                        .title("Saborfy-API")
+                        .version("v2.0.0")
                 )
                 .components(new Components()
                         .addSecuritySchemes(

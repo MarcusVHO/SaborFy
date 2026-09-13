@@ -29,8 +29,6 @@ public class AuthLoginService {
     @Transactional
     public LoginResponse execute(LoginRequest command) {
         AuthenticationUserDataResponse authenticationUser = userAuthenticationQuery.findByUsername(command.username());
-
-
         if (!authenticationUser.active()
             || !passwordVerifier.matches(
                 command.password(),
@@ -43,8 +41,9 @@ public class AuthLoginService {
         String refreshToken = tokenGenerator.generateRefreshToken(authenticationUser.id(), authenticationUser.restaurantId());
         refreshTokenManager.create(authenticationUser.id(), refreshToken);
         log.info(
-                "Login successful for username={}",
-                command.username()
+                "Login successful for registration={} role={}",
+                command.username(),
+                authenticationUser.role()
         );
         return new LoginResponse(token, refreshToken);
     }

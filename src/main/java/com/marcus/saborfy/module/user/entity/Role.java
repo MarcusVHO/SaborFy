@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.List;
+
 @Entity
 @Table(name = "role")
 @Getter
@@ -21,4 +23,8 @@ public class Role implements GrantedAuthority {
     public @Nullable String getAuthority() {
         return "ROLE_" + name;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private List<User> users;
+
 }

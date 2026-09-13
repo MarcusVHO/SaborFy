@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service;
+package com.marcus.saborfy.module.user.query;
 
 import com.marcus.saborfy.shared.exception.UserNotFoundException;
 import com.marcus.saborfy.module.user.api.internal.dto.AuthenticationUserDataResponse;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class FindUserForAuthenticationService implements UserAuthenticationQuery {
+public class AuthenticationQueryImpl implements UserAuthenticationQuery {
     private final UserRepository userRepository;
     private final UserMapper mapper;
 
     public AuthenticationUserDataResponse findByUsername(String username) {
-        return userRepository.findByUsername(username)
+        return userRepository.findByRegistration(username)
                 .map(mapper::entityToAuthenticationUserDataResponse).orElseThrow(UserNotFoundException::new);
     }
 }
