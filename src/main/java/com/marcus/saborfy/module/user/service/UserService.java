@@ -20,8 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 @Slf4j
 public class UserService  {
@@ -45,7 +43,7 @@ public class UserService  {
         if (repository.existsByRegistration(request.registration())) {
             throw new UserAlreadyExistsException();
         }
-        validateRolePermission(currentUserRole, request.role());
+        validateCanManage(currentUserRole, request.role());
         User user = User.create(
                 companyId,
                 request.registration(),
@@ -61,10 +59,10 @@ public class UserService  {
     @Transactional
     public UserResponse addRoleUseCase(CurrentUser currentUser, Long userId, AddRoleRequest request) {
         User user = repository.findById(userId).orElseThrow(UserNotFoundException::new);
-        validateRolePermission(currentUser.getHighestRole(), request.roleName());
+        validateCanAssignRole(currentUser.getHighestRole(), request.roleName());
         validateRestaurant(currentUser.companyId(), user.getRestaurantId());
         Role role = roleRepository.findByName(request.roleName()).orElseThrow(RoleNotFoundException::new);
-        validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
+        validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         user.addRole(role);
         repository.save(user);
         return mapper.entityToUserResponse(user);
@@ -74,7 +72,9 @@ public class UserService  {
     public Page<UserResponse> getPageUserUseCase(String searchText, RoleName roleName, Long restaurantId, Pageable pageable) {
         searchText = searchText == null ? "" : searchText;
         Long roleId = roleName != null
-                ? Objects.requireNonNull(roleRepository.findByName(roleName).orElse(null)).getId()
+                ? roleRepository.findByName(roleName)
+                  .orElseThrow(RoleNotFoundException::new)
+                  .getId()
                 : null;
         return repository.findAllUsers(searchText, roleId, pageable, restaurantId);
     }
@@ -87,19 +87,17 @@ public class UserService  {
         if (currentUser.id().equals(request.userId())) {
             changePassword(request.password(), request.newPassword(), user, user);
         } else {
-            validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
+            validateCanManage(currentUser.getHighestRole(), user.getRoleName());
             User userAdmin = finder.findEntityByIdOrThrow(currentUser.id());
             changePassword(request.password(), request.newPassword(), user, userAdmin);
         }
-        System.out.println(passwordEncoder.matches(request.newPassword(), user.getPasswordHash()));
         repository.save(user);
-
     }
 
     //Enable and disable user
     public void changeEnableUserUseCase(CurrentUser currentUser, Long userId, boolean state) {
         User user = finder.findEntityByIdOrThrow(userId);
-        validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
+        validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         validateRestaurant(currentUser.companyId(), user.getRestaurantId());
         if (state) {
             user.enable();
@@ -109,9 +107,10 @@ public class UserService  {
         repository.save(user);
     }
 
+    //Change name of user
     public void changeNameUseCase(CurrentUser currentUser, Long userId, String name) {
         User user = finder.findEntityByIdOrThrow(userId);
-        validateRolePermission(currentUser.getHighestRole(), user.getRoleName());
+        validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         validateRestaurant(currentUser.companyId(), user.getRestaurantId());
         user.update(name);
         repository.save(user);
@@ -127,7 +126,16 @@ public class UserService  {
         user.setPasswordHash(passwordEncoder.encode(newPassword.trim()));
     }
 
-    private void validateRolePermission(
+    private void validateCanManage(
+            RoleName currentUserRole,
+            RoleName newRole
+    ) {
+        if (currentUserRole.canManager(newRole)) {
+            throw new ForbiddenOperationException();
+        }
+    }
+    
+    private void validateCanAssignRole(
             RoleName currentUserRole,
             RoleName newRole
     ) {

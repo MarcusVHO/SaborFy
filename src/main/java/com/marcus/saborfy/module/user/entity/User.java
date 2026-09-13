@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -50,7 +51,7 @@ public class User implements UserDetails {
     @CreationTimestamp
     private Instant createdAt;
 
-    @Setter
+    @UpdateTimestamp
     @Column(nullable = false, name = "updated_at")
     private Instant updatedAt;
 
@@ -91,7 +92,6 @@ public class User implements UserDetails {
         return active;
     }
 
-
     public static User create(Long restaurantId, String registration, String passwordHash, String name, Role role) {
         return new User(
                 restaurantId,
@@ -112,7 +112,6 @@ public class User implements UserDetails {
         this.passwordHash = passwordHash;
         this.name = name;
         this.addRole(role);
-        this.updatedAt = Instant.now();
     }
 
     public void addRole(Role role) {
@@ -139,6 +138,5 @@ public class User implements UserDetails {
         if (!name.isEmpty()) {
             this.setName(name);
         }
-        this.updatedAt = Instant.now();
     }
 }
