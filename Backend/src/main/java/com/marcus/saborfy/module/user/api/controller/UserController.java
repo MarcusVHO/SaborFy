@@ -64,7 +64,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser currentUser,
             @Valid @RequestBody ChangePasswordRequest request
             ){
-        updateService.updatePassword(currentUser, request);
+        updateService.changePassword(currentUser, request);
         return null;
     }
 
@@ -74,7 +74,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser user,
             @PathVariable Long userId
     ) {
-        updateService.changeEnableUser(user, userId, false);
+        updateService.changeUserActiveState(user, userId, false);
         return ResponseEntity.noContent().build();
     }
 
@@ -84,7 +84,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser user,
             @PathVariable Long userId
     ) {
-        updateService.changeEnableUser(user, userId, true);
+        updateService.changeUserActiveState(user, userId, true);
         return ResponseEntity.noContent().build();
     }
 

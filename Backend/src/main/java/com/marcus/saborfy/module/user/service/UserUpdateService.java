@@ -24,7 +24,7 @@ public class UserUpdateService {
     }
 
 
-    public void updatePassword(CurrentUser currentUser, ChangePasswordRequest request) {
+    public void changePassword(CurrentUser currentUser, ChangePasswordRequest request) {
         User user = finder.findEntityByIdOrThrow(request.userId());
         validator.validateRestaurant(currentUser.companyId(), user.getRestaurantId());
         if (currentUser.id().equals(request.userId())) {
@@ -32,23 +32,26 @@ public class UserUpdateService {
                     request.password(),
                     request.newPassword(),
                     user,
-                    user.getPassword());
-        } else {
-            validator.validateCanManage(currentUser.getHighestRole(), user.getRoleName());
-            updatePassword(
-                    request.password(),
-                    request.newPassword(),
-                    user,
-                    repository.findPasswordById(currentUser.id())
+                    user.getPassword()
             );
+            repository.save(user);
+            return;
         }
+
+        validator.validateCanManage(currentUser.getHighestRole(), user.getRoleName());
+        updatePassword(
+                request.password(),
+                request.newPassword(),
+                user,
+                repository.findPasswordById(currentUser.id())
+        );
         repository.save(user);
     }
 
-    public void changeEnableUser(CurrentUser currentUser, Long userId, boolean state) {
+    public void changeUserActiveState(CurrentUser currentUser, Long userId, boolean state) {
         User user = finder.findEntityByIdOrThrow(userId);
-        validator.validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         validator.validateRestaurant(currentUser.companyId(), user.getRestaurantId());
+        validator.validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         if (state) {
             user.enable();
         } else {
@@ -59,16 +62,16 @@ public class UserUpdateService {
 
     public void changeName(CurrentUser currentUser, Long userId, String name) {
         User user = finder.findEntityByIdOrThrow(userId);
-        validator.validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         validator.validateRestaurant(currentUser.companyId(), user.getRestaurantId());
+        validator.validateCanManage(currentUser.getHighestRole(), user.getRoleName());
         user.update(name);
         repository.save(user);
     }
 
-    private void updatePassword(String password, String newPassword, User user, String passwordHash) {
+    private void updatePassword(String password, String newPassword, User user, String currentUserPasswordHash) {
         if (
-                !user.isActive()
-                        || !passwordEncoder.matches(password, passwordHash)
+            !user.isActive()
+                    || !passwordEncoder.matches(password, currentUserPasswordHash)
         ) {
             throw new InvalidCredentialException();
         }

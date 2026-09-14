@@ -369,7 +369,7 @@ class UserUpdateTest {
         when(user.getRoleName())
                 .thenReturn(RoleName.WAITER);
 
-        service.changeEnableUser(
+        service.changeUserActiveState(
                 currentUser,
                 targetUserId,
                 true
@@ -424,7 +424,7 @@ class UserUpdateTest {
         when(user.getRoleName())
                 .thenReturn(RoleName.WAITER);
 
-        service.changeEnableUser(
+        service.changeUserActiveState(
                 currentUser,
                 targetUserId,
                 false
