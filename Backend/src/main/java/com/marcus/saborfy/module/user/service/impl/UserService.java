@@ -37,23 +37,6 @@ public class UserService  {
     }
 
     @Transactional
-    public UserResponse registerUseCase(CurrentUser currentUser, RegisterUserRequest request) {
-        if (repository.existsByRegistration(request.registration())) {
-            throw new UserAlreadyExistsException();
-        }
-        validateCanManage(currentUser.getHighestRole(), request.role());
-        User user = User.create(
-                currentUser.companyId(),
-                request.registration(),
-                passwordEncoder.encode(request.password().trim()),
-                request.name(),
-                roleRepository.findByName(request.role()).orElseThrow(RoleNotFoundException::new)
-        );
-        User savedUser = repository.save(user);
-        return mapper.entityToUserResponse(savedUser);
-    }
-
-    @Transactional
     public UserResponse addRoleUseCase(CurrentUser currentUser, Long userId, AddRoleRequest request) {
         User user = repository.findById(userId).orElseThrow(UserNotFoundException::new);
         validateCanAssignRole(currentUser.getHighestRole(), request.roleName());
