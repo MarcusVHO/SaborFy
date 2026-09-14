@@ -3,11 +3,12 @@ package com.marcus.saborfy.module.user.enuns;
 import lombok.Getter;
 
 public enum RoleName {
-    WAITER(1),
-    TELLER(2),
-    ADMIN(3),
-    SYSTEM_ADMIN(5),
-    OWNER(4);
+    COOK(1),
+    WAITER(2),
+    TELLER(3),
+    ADMIN(4),
+    SYSTEM_ADMIN(6),
+    OWNER(5);
 
     @Getter
     private final int level;
