@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class UserRoleServiceImpl implements UserRoleService {
     private final UserRepository repository;
     private final RoleRepository roleRepository;
-    private final UserValidation validation;
+    private final PermissionValidator validation;
     private final UserMapper mapper;
 
-    public UserRoleServiceImpl(UserRepository repository, RoleRepository roleRepository, UserValidation validation, UserMapper mapper) {
+    public UserRoleServiceImpl(UserRepository repository, RoleRepository roleRepository, PermissionValidator validation, UserMapper mapper) {
         this.repository = repository;
         this.roleRepository = roleRepository;
         this.validation = validation;

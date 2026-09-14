@@ -36,27 +36,6 @@ public class UserService  {
         this.finder = finder;
     }
 
-    @Transactional
-    public UserResponse addRoleUseCase(CurrentUser currentUser, Long userId, AddRoleRequest request) {
-        User user = repository.findById(userId).orElseThrow(UserNotFoundException::new);
-        validateCanAssignRole(currentUser.getHighestRole(), request.roleName());
-        validateRestaurant(currentUser.companyId(), user.getRestaurantId());
-        Role role = roleRepository.findByName(request.roleName()).orElseThrow(RoleNotFoundException::new);
-        validateCanManage(currentUser.getHighestRole(), user.getRoleName());
-        user.addRole(role);
-        repository.save(user);
-        return mapper.entityToUserResponse(user);
-    }
-
-    public Page<UserResponse> getPageUserUseCase(String searchText, RoleName roleName, Long restaurantId, Pageable pageable) {
-        searchText = searchText == null ? "" : searchText;
-        Long roleId = roleName != null
-                ? roleRepository.findByName(roleName)
-                  .orElseThrow(RoleNotFoundException::new)
-                  .getId()
-                : null;
-        return repository.findAllUsers(searchText, roleId, pageable, restaurantId);
-    }
 
     @Transactional
     public void changePasswordUseCase(CurrentUser currentUser, ChangePasswordRequest request) {

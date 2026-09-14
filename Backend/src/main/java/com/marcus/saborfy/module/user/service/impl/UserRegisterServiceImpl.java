@@ -19,9 +19,9 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UserMapper mapper;
-    private final UserValidation validator;
+    private final PermissionValidator validator;
 
-    public UserRegisterServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserMapper mapper, UserValidation validator) {
+    public UserRegisterServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserMapper mapper, PermissionValidator validator) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;

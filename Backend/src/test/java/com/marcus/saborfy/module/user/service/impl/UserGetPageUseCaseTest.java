@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service;
+package com.marcus.saborfy.module.user.service.impl;
 
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
 import com.marcus.saborfy.module.user.enuns.RoleName;
@@ -6,7 +6,6 @@ import com.marcus.saborfy.module.user.entity.Role;
 import com.marcus.saborfy.module.user.mapper.UserMapper;
 import com.marcus.saborfy.module.user.repository.RoleRepository;
 import com.marcus.saborfy.module.user.repository.UserRepository;
-import com.marcus.saborfy.module.user.service.impl.UserService;
 import com.marcus.saborfy.shared.exception.RoleNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +38,7 @@ class UserGetPageUseCaseTest {
     private UserMapper mapper;
 
     @InjectMocks
-    private UserService service;
+    private UserListServiceImpl service;
 
     @Test
     void shouldReturnUsersPageWithSearchAndRole() {

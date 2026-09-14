@@ -5,7 +5,7 @@ import com.marcus.saborfy.shared.exception.ForbiddenOperationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserValidation {
+public class PermissionValidator {
     protected void validateCanManage(
             RoleName currentUserRole,
             RoleName newRole

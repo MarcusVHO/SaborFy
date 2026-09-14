@@ -42,7 +42,7 @@ class UserRegisterTest {
     private UserMapper mapper;
 
     @Mock
-    private UserValidation validator;
+    private PermissionValidator validator;
 
     @InjectMocks
     private UserRegisterServiceImpl service;

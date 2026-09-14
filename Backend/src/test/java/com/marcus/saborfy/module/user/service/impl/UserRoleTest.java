@@ -34,7 +34,7 @@ class UserRoleTest {
     private RoleRepository roleRepository;
 
     @Mock
-    private UserValidation validation;
+    private PermissionValidator validation;
 
     @Mock
     private UserMapper mapper;

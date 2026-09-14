@@ -3,6 +3,7 @@ package com.marcus.saborfy.module.user.api.controller;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
 import com.marcus.saborfy.module.user.enuns.RoleName;
+import com.marcus.saborfy.module.user.service.UserListService;
 import com.marcus.saborfy.module.user.service.UserRegisterService;
 import com.marcus.saborfy.shared.security.CurrentUser;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
@@ -26,10 +27,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService service;
     private final UserRegisterService registerService;
+    private final UserListService listService;
 
-    public UserController(UserService service, UserRegisterService registerService) {
+    public UserController(UserService service, UserRegisterService registerService, UserListService listService) {
         this.service = service;
         this.registerService = registerService;
+        this.listService = listService;
     }
 
 
@@ -52,7 +55,7 @@ public class UserController {
             Pageable pageable,
             @AuthenticationPrincipal CurrentUser user
             ) {
-        return ResponseEntity.ok().body(service.getPageUserUseCase(searchText, roleName, user.companyId(),pageable));
+        return ResponseEntity.ok().body(listService.getPageUserUseCase(searchText, roleName, user.companyId(),pageable));
     }
 
     @PatchMapping("/password")
