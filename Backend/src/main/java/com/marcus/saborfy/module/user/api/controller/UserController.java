@@ -3,6 +3,7 @@ package com.marcus.saborfy.module.user.api.controller;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
 import com.marcus.saborfy.module.user.enuns.RoleName;
+import com.marcus.saborfy.module.user.service.UserRegisterService;
 import com.marcus.saborfy.shared.security.CurrentUser;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
 import com.marcus.saborfy.module.user.service.impl.UserService;
@@ -24,9 +25,11 @@ import org.springframework.web.bind.annotation.*;
 )
 public class UserController {
     private final UserService service;
+    private final UserRegisterService registerService;
 
-    public UserController(UserService service) {
+    public UserController(UserService service, UserRegisterService registerService) {
         this.service = service;
+        this.registerService = registerService;
     }
 
 
@@ -37,7 +40,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser currentUser
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                service.registerUseCase(currentUser,request)
+                registerService.registerUseCase(currentUser,request)
         );
     }
 
