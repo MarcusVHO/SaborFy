@@ -33,7 +33,7 @@ public class PromotionController {
             @RequestBody @Valid AddRoleRequest request
             ) {
         return ResponseEntity.ok().body(
-                service.addRoleUseCase(user, id, request)
+                service.addRole(user, id, request)
         );
     }
 

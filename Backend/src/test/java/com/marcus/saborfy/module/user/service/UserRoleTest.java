@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service.impl;
+package com.marcus.saborfy.module.user.service;
 
 import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
@@ -40,7 +40,7 @@ class UserRoleTest {
     private UserMapper mapper;
 
     @InjectMocks
-    private UserRoleServiceImpl service;
+    private UserRoleService service;
 
     // ============================================================
     // addRoleUseCase
@@ -82,7 +82,7 @@ class UserRoleTest {
                 .thenReturn(expectedResponse);
 
         // Act
-        UserResponse result = service.addRoleUseCase(
+        UserResponse result = service.addRole(
                 currentUser,
                 userId,
                 request
@@ -152,7 +152,7 @@ class UserRoleTest {
         UserNotFoundException exception =
                 assertThrows(
                         UserNotFoundException.class,
-                        () -> service.addRoleUseCase(
+                        () -> service.addRole(
                                 currentUser,
                                 userId,
                                 request
@@ -210,7 +210,7 @@ class UserRoleTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.addRoleUseCase(
+        service.addRole(
                 currentUser,
                 userId,
                 request
@@ -262,7 +262,7 @@ class UserRoleTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.addRoleUseCase(
+        service.addRole(
                 currentUser,
                 userId,
                 request
@@ -311,7 +311,7 @@ class UserRoleTest {
         RoleNotFoundException exception =
                 assertThrows(
                         RoleNotFoundException.class,
-                        () -> service.addRoleUseCase(
+                        () -> service.addRole(
                                 currentUser,
                                 userId,
                                 request
@@ -389,7 +389,7 @@ class UserRoleTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.addRoleUseCase(
+        service.addRole(
                 currentUser,
                 userId,
                 request
@@ -441,7 +441,7 @@ class UserRoleTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.addRoleUseCase(
+        service.addRole(
                 currentUser,
                 userId,
                 request
@@ -495,7 +495,7 @@ class UserRoleTest {
                 .thenReturn(expectedResponse);
 
         // Act
-        UserResponse result = service.addRoleUseCase(
+        UserResponse result = service.addRole(
                 currentUser,
                 userId,
                 request

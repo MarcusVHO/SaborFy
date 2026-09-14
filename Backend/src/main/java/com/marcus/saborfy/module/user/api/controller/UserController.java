@@ -43,7 +43,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser currentUser
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                registerService.registerUseCase(currentUser,request)
+                registerService.register(currentUser,request)
         );
     }
 
@@ -55,7 +55,7 @@ public class UserController {
             Pageable pageable,
             @AuthenticationPrincipal CurrentUser user
             ) {
-        return ResponseEntity.ok().body(listService.getPageUserUseCase(searchText, roleName, user.companyId(),pageable));
+        return ResponseEntity.ok().body(listService.listRestaurantUsers(searchText, roleName, user.companyId(),pageable));
     }
 
     @PatchMapping("/password")
@@ -64,7 +64,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser currentUser,
             @Valid @RequestBody ChangePasswordRequest request
             ){
-        updateService.changePasswordUseCase(currentUser, request);
+        updateService.updatePassword(currentUser, request);
         return null;
     }
 
@@ -74,7 +74,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser user,
             @PathVariable Long userId
     ) {
-        updateService.changeEnableUserUseCase(user, userId, false);
+        updateService.changeEnableUser(user, userId, false);
         return ResponseEntity.noContent().build();
     }
 
@@ -84,7 +84,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser user,
             @PathVariable Long userId
     ) {
-        updateService.changeEnableUserUseCase(user, userId, true);
+        updateService.changeEnableUser(user, userId, true);
         return ResponseEntity.noContent().build();
     }
 
@@ -95,7 +95,7 @@ public class UserController {
             @PathVariable Long userId,
             @PathVariable String name
     ) {
-        updateService.changeNameUseCase(user, userId, name);
+        updateService.changeName(user, userId, name);
         return ResponseEntity.noContent().build();
     }
 }

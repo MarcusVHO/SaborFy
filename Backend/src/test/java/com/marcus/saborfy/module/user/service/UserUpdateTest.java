@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service.impl;
+package com.marcus.saborfy.module.user.service;
 
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
 import com.marcus.saborfy.module.user.entity.User;
@@ -37,7 +37,7 @@ class UserUpdateTest {
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private UserUpdateServiceImpl service;
+    private UserUpdateService service;
 
     @Test
     void shouldChangeOwnPasswordSuccessfully() {
@@ -80,7 +80,7 @@ class UserUpdateTest {
                 request.newPassword().trim()
         )).thenReturn("encoded-new-password");
 
-        service.changePasswordUseCase(
+        service.updatePassword(
                 currentUser,
                 request
         );
@@ -162,7 +162,7 @@ class UserUpdateTest {
                 request.newPassword().trim()
         )).thenReturn("encoded-new-password");
 
-        service.changePasswordUseCase(
+        service.updatePassword(
                 currentUser,
                 request
         );
@@ -217,7 +217,7 @@ class UserUpdateTest {
 
         assertThrows(
                 InvalidCredentialException.class,
-                () -> service.changePasswordUseCase(currentUser, request)
+                () -> service.updatePassword(currentUser, request)
         );
 
         verify(passwordEncoder, never())
@@ -268,7 +268,7 @@ class UserUpdateTest {
 
         assertThrows(
                 InvalidCredentialException.class,
-                () -> service.changePasswordUseCase(
+                () -> service.updatePassword(
                         currentUser,
                         request
                 )
@@ -330,7 +330,7 @@ class UserUpdateTest {
         when(passwordEncoder.encode("newPassword"))
                 .thenReturn("encoded-new-password");
 
-        service.changePasswordUseCase(
+        service.updatePassword(
                 currentUser,
                 request
         );
@@ -369,7 +369,7 @@ class UserUpdateTest {
         when(user.getRoleName())
                 .thenReturn(RoleName.WAITER);
 
-        service.changeEnableUserUseCase(
+        service.changeEnableUser(
                 currentUser,
                 targetUserId,
                 true
@@ -424,7 +424,7 @@ class UserUpdateTest {
         when(user.getRoleName())
                 .thenReturn(RoleName.WAITER);
 
-        service.changeEnableUserUseCase(
+        service.changeEnableUser(
                 currentUser,
                 targetUserId,
                 false
@@ -478,7 +478,7 @@ class UserUpdateTest {
         when(user.getRoleName())
                 .thenReturn(RoleName.WAITER);
 
-        service.changeNameUseCase(
+        service.changeName(
                 currentUser,
                 targetUserId,
                 newName

@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service.impl;
+package com.marcus.saborfy.module.user.service;
 
 import com.marcus.saborfy.module.user.enuns.RoleName;
 import com.marcus.saborfy.shared.exception.ForbiddenOperationException;

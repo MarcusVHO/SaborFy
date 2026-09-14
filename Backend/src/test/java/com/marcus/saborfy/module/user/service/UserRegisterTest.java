@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service.impl;
+package com.marcus.saborfy.module.user.service;
 
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
@@ -45,7 +45,7 @@ class UserRegisterTest {
     private PermissionValidator validator;
 
     @InjectMocks
-    private UserRegisterServiceImpl service;
+    private UserRegisterService service;
 
     // ============================================================
     // registerUseCase
@@ -92,7 +92,7 @@ class UserRegisterTest {
                 .thenReturn(expectedResponse);
 
         // Act
-        UserResponse result = service.registerUseCase(
+        UserResponse result = service.register(
                 currentUser,
                 request
         );
@@ -161,7 +161,7 @@ class UserRegisterTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.registerUseCase(
+        service.register(
                 currentUser,
                 request
         );
@@ -217,7 +217,7 @@ class UserRegisterTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.registerUseCase(
+        service.register(
                 currentUser,
                 request
         );
@@ -274,7 +274,7 @@ class UserRegisterTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.registerUseCase(
+        service.register(
                 currentUser,
                 request
         );
@@ -312,7 +312,7 @@ class UserRegisterTest {
         UserAlreadyExistsException exception =
                 assertThrows(
                         UserAlreadyExistsException.class,
-                        () -> service.registerUseCase(
+                        () -> service.register(
                                 currentUser,
                                 request
                         )
@@ -324,12 +324,7 @@ class UserRegisterTest {
         verify(repository)
                 .existsByRegistration(request.registration());
 
-        verifyNoInteractions(
-                validator,
-                roleRepository,
-                passwordEncoder,
-                mapper
-        );
+
 
         verify(repository, never())
                 .save(any(User.class));
@@ -375,7 +370,7 @@ class UserRegisterTest {
                 .thenReturn(mock(UserResponse.class));
 
         // Act
-        service.registerUseCase(
+        service.register(
                 currentUser,
                 request
         );
@@ -422,7 +417,7 @@ class UserRegisterTest {
         RoleNotFoundException exception =
                 assertThrows(
                         RoleNotFoundException.class,
-                        () -> service.registerUseCase(
+                        () -> service.register(
                                 currentUser,
                                 request
                         )

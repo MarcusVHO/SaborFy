@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service.impl;
+package com.marcus.saborfy.module.user.service;
 
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
 import com.marcus.saborfy.module.user.enuns.RoleName;
@@ -38,7 +38,7 @@ class UserGetTest {
     private UserMapper mapper;
 
     @InjectMocks
-    private UserListServiceImpl service;
+    private UserListService service;
 
     @Test
     void shouldReturnUsersPageWithSearchAndRole() {
@@ -65,7 +65,7 @@ class UserGetTest {
                 restaurantId
         )).thenReturn(expectedPage);
 
-        Page<UserResponse> result = service.getPageUserUseCase(
+        Page<UserResponse> result = service.listRestaurantUsers(
                 searchText,
                 roleName,
                 restaurantId,
@@ -105,7 +105,7 @@ class UserGetTest {
                 restaurantId
         )).thenReturn(expectedPage);
 
-        Page<UserResponse> result = service.getPageUserUseCase(
+        Page<UserResponse> result = service.listRestaurantUsers(
                 null,
                 roleName,
                 restaurantId,
@@ -137,7 +137,7 @@ class UserGetTest {
                 restaurantId
         )).thenReturn(expectedPage);
 
-        Page<UserResponse> result = service.getPageUserUseCase(
+        Page<UserResponse> result = service.listRestaurantUsers(
                 searchText,
                 null,
                 restaurantId,
@@ -168,7 +168,7 @@ class UserGetTest {
 
         assertThrows(
                 RoleNotFoundException.class,
-                () -> service.getPageUserUseCase(
+                () -> service.listRestaurantUsers(
                         searchText,
                         roleName,
                         restaurantId,
@@ -195,7 +195,7 @@ class UserGetTest {
                 restaurantId
         )).thenReturn(expectedPage);
 
-        Page<UserResponse> result = service.getPageUserUseCase(
+        Page<UserResponse> result = service.listRestaurantUsers(
                 searchText,
                 null,
                 restaurantId,

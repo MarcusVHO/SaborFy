@@ -38,4 +38,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             Pageable pageable,
             @Param("restaurantId") Long restaurantId
     );
+
+    @Query("SELECT u.passwordHash from User u WHERE u.id = :id")
+    String findPasswordById(Long id);
 }
