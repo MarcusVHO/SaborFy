@@ -37,3 +37,4 @@ src/main/resources/application-test.yml
 .idea/
 **/.idea/
 **/.env/
+**/.DS_Store/
