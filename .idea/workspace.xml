@@ -4,113 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be6b1067-712d-43e2-9f29-f452b203367d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/banco_de_dados/conceitual/V1_banco_de_dados.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/banco_de_dados/conceitual/V2_banco_de_dados.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/banco_de_dados/logico/V1_diagrama_logico.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/banco_de_dados/logico/arquivo/V1_diagrama_logico.brM3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/decisões/decisoes.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/escopo /V1_escopo_do_projeto.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/etapas/V1_etapas.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/regras_de_negocio/V1_regras_de_negocio.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/regras_de_negocio/V2_regras_de_negocio.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/requisitos/funcionais/V1_funcionais.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/requisitos/funcionais/V2_funcionais.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/requisitos/funcionais/V3_funcionais.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/requisitos/nao_funcionais/V1_nao_funcionais.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/SaborfyApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/configuration/OpenApiConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/configuration/PasswordConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/configuration/SecurityConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/security/CustomUserDetailsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/security/SecurityFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/security/Sha256TokenHasher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/security/TokenConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/security/dto/UserData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/infrastructure/security/dto/UserPayloadData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/api/controller/AuthenticationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/dto/request/LoginRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/dto/request/RefreshTokenRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/dto/response/LoginResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/entity/RefreshToken.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/mapper/AuthMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/repository/RefreshTokenRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/service/AuthLoginService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/service/AuthLogoutService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/service/AuthRefreshService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/auth/service/RefreshTokenManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/menu/entity/Category.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/menu/entity/Product.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/order/entity/Order.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/order/entity/OrderItem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/order/status/OrderStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/payment/entity/Payment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/payment/enums/PaymentMethods.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/restaurant/entity/Restaurant.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/section/entity/Section.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/tab/entity/Tab.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/tab/enums/TabStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/api/controller/PromotionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/api/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/api/internal/contract/UserAuthenticationQuery.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/api/internal/contract/UserQueryApi.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/api/internal/dto/AuthenticationUserDataResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/api/internal/dto/UserInternalResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/dto/request/AddRoleRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/dto/request/ChangePasswordRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/dto/request/RegisterOwnerRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/dto/request/RegisterUserRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/dto/response/UserResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/entity/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/enuns/RoleName.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/finder/UserFinder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/mapper/UserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/query/AuthenticationQueryImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/query/UserQueryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/repository/RoleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/module/user/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/api/exception/GlobalExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/api/exception/dto/ApiExceptionResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/api/exception/dto/FieldErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/exception/ForbiddenOperationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/exception/InvalidCredentialException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/exception/InvalidRefreshTokenException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/exception/RoleNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/exception/UserAlreadyExistsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/exception/UserNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/marcus/saborfy/shared/security/CurrentUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V10__create_table_order.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V11__create_table_order_items.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__create-table_roles.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__create_users_table.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V3__create_refresh_token_table.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V4__create_table_restaurant.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V5__create_section_table.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V6__create_table_tab.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V7__create_table_payment.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V8__create_table_category.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V9__create_table_product.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/SaborfyApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/module/user/service/UserAddRoleUseCaseTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/module/user/service/UserChangeEnableUseCaseTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/module/user/service/UserChangeNameUseCaseTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/module/user/service/UserChangePasswordUseCaseTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/module/user/service/UserGetPageUseCaseTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/marcus/saborfy/module/user/service/UserRegisterTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="be6b1067-712d-43e2-9f29-f452b203367d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -143,23 +37,23 @@
     &quot;assignee&quot;: &quot;MarcusVHO&quot;
   }
 }</component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
     {
-      "id": {
-        "id": "PR_kwDORh9RPs8AAAABDYWePQ",
-        "number": 17
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDORh9RPs8AAAABDYWePQ&quot;,
+        &quot;number&quot;: 17
       },
-      "lastSeen": 1789348523611
+      &quot;lastSeen&quot;: 1789348523611
     }
   ]
-}]]></component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/MarcusVHO/SaborFy.git&quot;,
-    &quot;accountId&quot;: &quot;94fdfa39-2035-4fa8-855d-6215c682464b&quot;
-  }
 }</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:MarcusVHO/SaborFy.git",
+    "accountId": "94fdfa39-2035-4fa8-855d-6215c682464b"
+  }
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -213,6 +107,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "development",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/marcus/IdeaProjects/SaborFy",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -385,6 +280,7 @@
       <workItem from="1789240319576" duration="10000" />
       <workItem from="1789240339556" duration="53000" />
       <workItem from="1789240463231" duration="38366000" />
+      <workItem from="1789349211308" duration="345000" />
     </task>
     <servers />
   </component>

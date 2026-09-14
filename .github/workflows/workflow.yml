@@ -24,11 +24,8 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Set directory
-        run: cd Backend
-
       - name: Run tests
-        run: ./mvnw -Dtest='User*Test' test
+        run: ./Backend/mvnw -Dtest='User*Test' test
 
   build:
     runs-on: ubuntu-latest
