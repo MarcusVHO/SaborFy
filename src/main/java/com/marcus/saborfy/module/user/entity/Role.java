@@ -3,6 +3,7 @@ package com.marcus.saborfy.module.user.entity;
 import com.marcus.saborfy.module.user.enuns.RoleName;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -13,9 +14,11 @@ import java.util.List;
 @Getter
 public class Role implements GrantedAuthority {
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private RoleName name;
 
