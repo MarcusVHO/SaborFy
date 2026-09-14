@@ -20,6 +20,9 @@ jobs:
           java-version: '21'
           cache: maven
 
+      - name: Set directory
+        run: cd Backend
+
       - name: Run tests
         run: ./mvnw -Dtest='User*Test' test
 
@@ -38,7 +41,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t marcusxyz5/saborfy:latest .
+          docker build -t marcusxyz5/saborfy:latest ./Backend
 
       - name: Push in Image
         run: |
