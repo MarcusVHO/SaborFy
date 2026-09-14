@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service;
+package com.marcus.saborfy.module.user.service.impl;
 
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
 import com.marcus.saborfy.module.user.enuns.RoleName;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserGetPageUseCaseTest {
+class UserGetTest {
 
     @Mock
     private UserRepository repository;
@@ -38,7 +38,7 @@ class UserGetPageUseCaseTest {
     private UserMapper mapper;
 
     @InjectMocks
-    private UserService service;
+    private UserListServiceImpl service;
 
     @Test
     void shouldReturnUsersPageWithSearchAndRole() {

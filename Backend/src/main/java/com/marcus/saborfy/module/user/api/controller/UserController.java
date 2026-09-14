@@ -3,9 +3,11 @@ package com.marcus.saborfy.module.user.api.controller;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
 import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
 import com.marcus.saborfy.module.user.enuns.RoleName;
+import com.marcus.saborfy.module.user.service.UserListService;
+import com.marcus.saborfy.module.user.service.UserRegisterService;
+import com.marcus.saborfy.module.user.service.UserUpdateService;
 import com.marcus.saborfy.shared.security.CurrentUser;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
-import com.marcus.saborfy.module.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -19,14 +21,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @Tag(
-        name = "User",
-        description = "User route relationship management"
+    name = "User",
+    description = "User route relationship management"
 )
 public class UserController {
-    private final UserService service;
+    private final UserRegisterService registerService;
+    private final UserListService listService;
+    private final UserUpdateService updateService;
 
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserRegisterService registerService, UserListService listService, UserUpdateService updateService) {
+        this.registerService = registerService;
+        this.listService = listService;
+        this.updateService = updateService;
     }
 
 
@@ -34,10 +40,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> register(
             @Valid @RequestBody RegisterUserRequest request,
-            @AuthenticationPrincipal CurrentUser user
+            @AuthenticationPrincipal CurrentUser currentUser
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                service.registerUseCase(user.getHighestRole(),request, user.companyId())
+                registerService.registerUseCase(currentUser,request)
         );
     }
 
@@ -49,7 +55,7 @@ public class UserController {
             Pageable pageable,
             @AuthenticationPrincipal CurrentUser user
             ) {
-        return ResponseEntity.ok().body(service.getPageUserUseCase(searchText, roleName, user.companyId(),pageable));
+        return ResponseEntity.ok().body(listService.getPageUserUseCase(searchText, roleName, user.companyId(),pageable));
     }
 
     @PatchMapping("/password")
@@ -58,7 +64,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser currentUser,
             @Valid @RequestBody ChangePasswordRequest request
             ){
-        service.changePasswordUseCase(currentUser, request);
+        updateService.changePasswordUseCase(currentUser, request);
         return null;
     }
 
@@ -68,7 +74,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser user,
             @PathVariable Long userId
     ) {
-        service.changeEnableUserUseCase(user, userId, false);
+        updateService.changeEnableUserUseCase(user, userId, false);
         return ResponseEntity.noContent().build();
     }
 
@@ -78,7 +84,7 @@ public class UserController {
             @AuthenticationPrincipal CurrentUser user,
             @PathVariable Long userId
     ) {
-        service.changeEnableUserUseCase(user, userId, true);
+        updateService.changeEnableUserUseCase(user, userId, true);
         return ResponseEntity.noContent().build();
     }
 
@@ -89,7 +95,7 @@ public class UserController {
             @PathVariable Long userId,
             @PathVariable String name
     ) {
-        service.changeNameUseCase(user, userId, name);
+        updateService.changeNameUseCase(user, userId, name);
         return ResponseEntity.noContent().build();
     }
 }
