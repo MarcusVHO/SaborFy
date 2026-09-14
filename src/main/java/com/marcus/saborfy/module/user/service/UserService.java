@@ -1,5 +1,4 @@
 package com.marcus.saborfy.module.user.service;
-
 import com.marcus.saborfy.module.user.finder.UserFinder;
 import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
@@ -37,7 +36,6 @@ public class UserService  {
         this.finder = finder;
     }
 
-    // Register user in system
     @Transactional
     public UserResponse registerUseCase(RoleName currentUserRole, RegisterUserRequest request, Long companyId) {
         if (repository.existsByRegistration(request.registration())) {
@@ -55,7 +53,6 @@ public class UserService  {
         return mapper.entityToUserResponse(savedUser);
     }
 
-    //  Register change role of user in system
     @Transactional
     public UserResponse addRoleUseCase(CurrentUser currentUser, Long userId, AddRoleRequest request) {
         User user = repository.findById(userId).orElseThrow(UserNotFoundException::new);
@@ -68,7 +65,6 @@ public class UserService  {
         return mapper.entityToUserResponse(user);
     }
 
-    // Get list users in database
     public Page<UserResponse> getPageUserUseCase(String searchText, RoleName roleName, Long restaurantId, Pageable pageable) {
         searchText = searchText == null ? "" : searchText;
         Long roleId = roleName != null
@@ -79,7 +75,6 @@ public class UserService  {
         return repository.findAllUsers(searchText, roleId, pageable, restaurantId);
     }
 
-    // Change role of determined user in system
     @Transactional
     public void changePasswordUseCase(CurrentUser currentUser, ChangePasswordRequest request) {
         User user = finder.findEntityByIdOrThrow(request.userId());
@@ -94,7 +89,6 @@ public class UserService  {
         repository.save(user);
     }
 
-    //Enable and disable user
     public void changeEnableUserUseCase(CurrentUser currentUser, Long userId, boolean state) {
         User user = finder.findEntityByIdOrThrow(userId);
         validateCanManage(currentUser.getHighestRole(), user.getRoleName());
@@ -107,7 +101,6 @@ public class UserService  {
         repository.save(user);
     }
 
-    //Change name of user
     public void changeNameUseCase(CurrentUser currentUser, Long userId, String name) {
         User user = finder.findEntityByIdOrThrow(userId);
         validateCanManage(currentUser.getHighestRole(), user.getRoleName());
