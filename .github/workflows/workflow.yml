@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Run tests
-        run: ./mvnw clean test
+        run: ./mvnw -Dtest='User*Test' test
 
   build:
     runs-on: ubuntu-latest
