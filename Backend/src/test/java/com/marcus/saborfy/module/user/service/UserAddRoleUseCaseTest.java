@@ -8,6 +8,7 @@ import com.marcus.saborfy.module.user.enuns.RoleName;
 import com.marcus.saborfy.module.user.mapper.UserMapper;
 import com.marcus.saborfy.module.user.repository.RoleRepository;
 import com.marcus.saborfy.module.user.repository.UserRepository;
+import com.marcus.saborfy.module.user.service.impl.UserService;
 import com.marcus.saborfy.shared.exception.ForbiddenOperationException;
 import com.marcus.saborfy.shared.exception.RoleNotFoundException;
 import com.marcus.saborfy.shared.exception.UserNotFoundException;

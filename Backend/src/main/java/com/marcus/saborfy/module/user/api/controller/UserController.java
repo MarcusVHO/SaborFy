@@ -5,7 +5,7 @@ import com.marcus.saborfy.module.user.dto.request.RegisterUserRequest;
 import com.marcus.saborfy.module.user.enuns.RoleName;
 import com.marcus.saborfy.shared.security.CurrentUser;
 import com.marcus.saborfy.module.user.dto.response.UserResponse;
-import com.marcus.saborfy.module.user.service.UserService;
+import com.marcus.saborfy.module.user.service.impl.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -34,10 +34,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> register(
             @Valid @RequestBody RegisterUserRequest request,
-            @AuthenticationPrincipal CurrentUser user
+            @AuthenticationPrincipal CurrentUser currentUser
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                service.registerUseCase(user.getHighestRole(),request, user.companyId())
+                service.registerUseCase(currentUser,request)
         );
     }
 

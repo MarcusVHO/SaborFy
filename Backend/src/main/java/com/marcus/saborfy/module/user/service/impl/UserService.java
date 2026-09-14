@@ -1,4 +1,4 @@
-package com.marcus.saborfy.module.user.service;
+package com.marcus.saborfy.module.user.service.impl;
 import com.marcus.saborfy.module.user.finder.UserFinder;
 import com.marcus.saborfy.module.user.dto.request.AddRoleRequest;
 import com.marcus.saborfy.module.user.dto.request.ChangePasswordRequest;
@@ -37,13 +37,13 @@ public class UserService  {
     }
 
     @Transactional
-    public UserResponse registerUseCase(RoleName currentUserRole, RegisterUserRequest request, Long companyId) {
+    public UserResponse registerUseCase(CurrentUser currentUser, RegisterUserRequest request) {
         if (repository.existsByRegistration(request.registration())) {
             throw new UserAlreadyExistsException();
         }
-        validateCanManage(currentUserRole, request.role());
+        validateCanManage(currentUser.getHighestRole(), request.role());
         User user = User.create(
-                companyId,
+                currentUser.companyId(),
                 request.registration(),
                 passwordEncoder.encode(request.password().trim()),
                 request.name(),

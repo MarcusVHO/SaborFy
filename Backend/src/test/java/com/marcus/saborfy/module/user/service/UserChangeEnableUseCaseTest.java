@@ -4,6 +4,7 @@ import com.marcus.saborfy.module.user.entity.User;
 import com.marcus.saborfy.module.user.enuns.RoleName;
 import com.marcus.saborfy.module.user.finder.UserFinder;
 import com.marcus.saborfy.module.user.repository.UserRepository;
+import com.marcus.saborfy.module.user.service.impl.UserService;
 import com.marcus.saborfy.shared.exception.ForbiddenOperationException;
 import com.marcus.saborfy.shared.exception.UserNotFoundException;
 import com.marcus.saborfy.shared.security.CurrentUser;

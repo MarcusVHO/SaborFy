@@ -6,6 +6,7 @@ import com.marcus.saborfy.module.user.entity.Role;
 import com.marcus.saborfy.module.user.mapper.UserMapper;
 import com.marcus.saborfy.module.user.repository.RoleRepository;
 import com.marcus.saborfy.module.user.repository.UserRepository;
+import com.marcus.saborfy.module.user.service.impl.UserService;
 import com.marcus.saborfy.shared.exception.RoleNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

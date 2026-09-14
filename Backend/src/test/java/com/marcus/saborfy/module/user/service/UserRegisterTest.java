@@ -8,15 +8,18 @@ import com.marcus.saborfy.module.user.enuns.RoleName;
 import com.marcus.saborfy.module.user.mapper.UserMapper;
 import com.marcus.saborfy.module.user.repository.RoleRepository;
 import com.marcus.saborfy.module.user.repository.UserRepository;
+import com.marcus.saborfy.module.user.service.impl.UserService;
 import com.marcus.saborfy.shared.exception.ForbiddenOperationException;
 import com.marcus.saborfy.shared.exception.RoleNotFoundException;
 import com.marcus.saborfy.shared.exception.UserAlreadyExistsException;
+import com.marcus.saborfy.shared.security.CurrentUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -82,12 +85,15 @@ class UserRegisterTest {
         when(mapper.entityToUserResponse(savedUser))
                 .thenReturn(expectedResponse);
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        CurrentUser currentUser = new CurrentUser(1L, companyId, simpleGrantedAuthority);
 
         // Act
         UserResponse result = service.registerUseCase(
-                RoleName.ADMIN,
-                request,
-                companyId
+                currentUser,
+                request
         );
 
 
@@ -143,12 +149,15 @@ class UserRegisterTest {
         when(mapper.entityToUserResponse(any(User.class)))
                 .thenReturn(mock(UserResponse.class));
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        CurrentUser currentUser = new CurrentUser(1L, companyId, simpleGrantedAuthority);
 
         // Act
         service.registerUseCase(
-                RoleName.ADMIN,
-                request,
-                companyId
+                currentUser,
+                request
         );
 
 
@@ -197,11 +206,15 @@ class UserRegisterTest {
         when(mapper.entityToUserResponse(any(User.class)))
                 .thenReturn(mock(UserResponse.class));
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        CurrentUser currentUser = new CurrentUser(1L, 1L, simpleGrantedAuthority);
+
         // Act
         service.registerUseCase(
-                RoleName.ADMIN,
-                request,
-                1L
+                currentUser,
+                request
         );
 
         // Assert
@@ -250,11 +263,15 @@ class UserRegisterTest {
         when(mapper.entityToUserResponse(any(User.class)))
                 .thenReturn(mock(UserResponse.class));
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        CurrentUser currentUser = new CurrentUser(1L, 1L, simpleGrantedAuthority);
+
         // Act
         service.registerUseCase(
-                RoleName.ADMIN,
-                request,
-                1L
+                currentUser,
+                request
         );
 
         // Assert
@@ -281,15 +298,18 @@ class UserRegisterTest {
         when(repository.existsByRegistration(request.registration()))
                 .thenReturn(true);
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        CurrentUser currentUser = new CurrentUser(1L, 1L, simpleGrantedAuthority);
 
         // Act
         UserAlreadyExistsException exception =
                 assertThrows(
                         UserAlreadyExistsException.class,
                         () -> service.registerUseCase(
-                                RoleName.ADMIN,
-                                request,
-                                1L
+                                currentUser,
+                                request
                         )
                 );
 
@@ -332,14 +352,18 @@ class UserRegisterTest {
                 .thenReturn(false);
 
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("WAITER");
+        CurrentUser currentUser = new CurrentUser(1L, 1L, simpleGrantedAuthority);
+
         // Act
         ForbiddenOperationException exception =
                 assertThrows(
                         ForbiddenOperationException.class,
                         () -> service.registerUseCase(
-                                RoleName.WAITER,
-                                request,
-                                1L
+                                currentUser,
+                                request
                         )
                 );
 
@@ -384,15 +408,19 @@ class UserRegisterTest {
         when(roleRepository.findByName(request.role()))
                 .thenReturn(Optional.empty());
 
+        Role role1 = new Role();
+        role1.setName(RoleName.ADMIN);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        CurrentUser currentUser = new CurrentUser(1L, 1L, simpleGrantedAuthority);
+
 
         // Act
         RoleNotFoundException exception =
                 assertThrows(
                         RoleNotFoundException.class,
                         () -> service.registerUseCase(
-                                RoleName.ADMIN,
-                                request,
-                                1L
+                                currentUser,
+                                request
                         )
                 );
 
