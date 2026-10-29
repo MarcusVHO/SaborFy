@@ -1,4 +1,10 @@
 .env
+# macOS
+.DS_Store
+
+# IntelliJ / JetBrains
+.idea/
+**/.idea/
 .idea
 Backend/.idea
 Backend/.idea/*
