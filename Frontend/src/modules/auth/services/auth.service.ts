@@ -36,27 +36,24 @@ export class AuthService {
       password: credentials.password,
     };
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: API_CONFIG.headers,
-        body: JSON.stringify(payload),
-      });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: API_CONFIG.headers,
+      body: JSON.stringify(payload),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Erro no login: Status ${response.status}`);
-      }
-
-      const data: AuthResponse = await response.json();
-      this.saveTokens(data.accessToken, data.refreshToken);
-      return data;
-    } catch (error: any) {
-      console.warn(`[SaborFy Auth] Requisição POST para ${url} falhou. Usando resposta simulada no padrão exato.`, error);
-      const mockData = await this.simulateMockLogin(credentials);
-      this.saveTokens(mockData.accessToken, mockData.refreshToken);
-      return mockData;
+    if (response.status === 401) {
+      throw new Error('Login ou senha incorretos.');
     }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `Erro no login: Status ${response.status}`);
+    }
+
+    const data: AuthResponse = await response.json();
+    this.saveTokens(data.accessToken, data.refreshToken);
+    return data;
   }
 
   /**
@@ -67,31 +64,20 @@ export class AuthService {
     const url = getApiUrl('/auth/refresh');
     const payload: RefreshTokenPayload = { refreshToken };
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: API_CONFIG.headers,
-        body: JSON.stringify(payload),
-      });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: API_CONFIG.headers,
+      body: JSON.stringify(payload),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Erro ao atualizar token: Status ${response.status}`);
-      }
-
-      const data: AuthResponse = await response.json();
-      this.saveTokens(data.accessToken, data.refreshToken);
-      return data;
-    } catch (error: any) {
-      console.warn(`[SaborFy Auth] Requisição POST para ${url} falhou. Usando simulação.`, error);
-      const mockData: AuthResponse = {
-        accessToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywicmVzdGF1cmFudElkIjoxLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTc4OTM1NzYyOSwiaWF0IjoxNzg5MzU0MDI5fQ.uIBMd-B7Qirdmt81hfX-yiA6pzG4E-G3rRATJPbD3jM',
-        refreshToken: refreshToken,
-      };
-      this.saveTokens(mockData.accessToken, mockData.refreshToken);
-      return mockData;
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `Erro ao atualizar token: Status ${response.status}`);
     }
+
+    const data: AuthResponse = await response.json();
+    this.saveTokens(data.accessToken, data.refreshToken);
+    return data;
   }
 
   /**
@@ -117,7 +103,7 @@ export class AuthService {
   }
 
   /**
-   * Remove os tokens salvos (Logout)
+   * Remove os tokens salvos (Logout local)
    */
   static clearTokens(): void {
     localStorage.removeItem(this.STORAGE_ACCESS_TOKEN_KEY);
@@ -125,20 +111,35 @@ export class AuthService {
   }
 
   /**
-   * Simulação com os tokens de exemplo fornecidos para desenvolvimento offline
+   * Realiza o Logout no backend enviando o refreshToken e limpa localmente
    */
-  private static async simulateMockLogin(credentials: LoginCredentials): Promise<AuthResponse> {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  static async logout(): Promise<void> {
+    const refreshToken = this.getRefreshToken();
+    const accessToken = this.getAccessToken();
+    
+    if (refreshToken) {
+      const url = getApiUrl('/auth/logout');
+      
+      const headers: Record<string, string> = {
+        ...API_CONFIG.headers,
+      };
+      
+      if (accessToken) {
+        headers['Authorization'] = `Bearer ${accessToken}`;
+      }
 
-    if (credentials.username === 'erro') {
-      throw new Error('Credenciais inválidas. Verifique seu usuário e senha.');
+      try {
+        await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ refreshToken }),
+        });
+      } catch (error) {
+        console.warn('[SaborFy Auth] Erro ao realizar logout no servidor.', error);
+      }
     }
-
-    return {
-      accessToken:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywicmVzdGF1cmFudElkIjoxLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTc4OTM1NzYyOSwiaWF0IjoxNzg5MzU0MDI5fQ.uIBMd-B7Qirdmt81hfX-yiA6pzG4E-G3rRATJPbD3jM',
-      refreshToken:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywicmVzdGF1cmFudElkIjoxLCJleHAiOjE3ODkzNzIwMjksImlhdCI6MTc4OTM1NDAyOX0.wHRe0KL9UcMuZ1i4oTpY0sqPLxUDOHzM5-KiN0K46_8',
-    };
+    this.clearTokens();
   }
+
+
 }

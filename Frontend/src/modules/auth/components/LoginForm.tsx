@@ -13,7 +13,6 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +36,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 
     try {
       // Realiza o login: os tokens (accessToken e refreshToken) serão armazenados automaticamente
-      const response = await AuthService.login({ username, password, rememberMe });
+      const response = await AuthService.login({ username, password });
       
       setIsSuccess(true);
       if (onSuccess) {
@@ -78,7 +77,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         </div>
       ) : (
         /* Login Form */
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5" autoComplete="off">
           <Input
             label="Usuário"
             type="text"
@@ -87,7 +86,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
             onChange={(e) => setUsername(e.target.value)}
             leftIcon={<User size={18} />}
             required
-            autoComplete="username"
+            autoComplete="off"
           />
 
           <Input
@@ -109,20 +108,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
               </button>
             }
             required
-            autoComplete="current-password"
+            autoComplete="new-password"
           />
 
           {/* Form Options */}
-          <div className="flex items-center justify-between text-xs sm:text-sm">
-            <label className="flex items-center gap-2 text-gray-300 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-600 bg-dark-800 text-sabor-500 focus:ring-sabor-500/30 accent-sabor-500"
-              />
-              <span>Lembrar de mim</span>
-            </label>
+          <div className="flex items-center justify-end text-xs sm:text-sm">
             <a
               href="#forgot-password"
               className="text-sabor-400 hover:text-sabor-300 transition-colors font-medium"

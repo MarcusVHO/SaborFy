@@ -1,10 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthHero } from '../components/AuthHero';
 import { LoginForm } from '../components/LoginForm';
 
 export const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const handleLoginSuccess = () => {
-    // Callback executado ao autenticar com sucesso (ex: redirecionamento de rota)
+    navigate('/');
   };
 
   return (

@@ -76,5 +76,9 @@ export const apiFetch = async (
     }
   }
 
+  if (response.status === 403 && !endpoint.includes('/auth/login')) {
+    throw new Error('Acesso Negado: Você não tem permissão para realizar esta ação.');
+  }
+
   return response;
 };
