@@ -6,6 +6,7 @@
 .idea/
 **/.idea/
 .idea
+.env
 Backend/.idea
 Backend/.idea/*
 Backend/src/main/resources/application-test.yml
