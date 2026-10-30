@@ -18,7 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+.idea/*
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -34,7 +34,3 @@ build/
 .env
 src/main/resources/application-dev.yml
 src/main/resources/application-test.yml
-.idea/
-**/.idea/
-**/.env/
-**/.DS_Store/

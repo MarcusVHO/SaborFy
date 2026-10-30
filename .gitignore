@@ -1,3 +1,18 @@
+.env
+# macOS
+.DS_Store
+
+# IntelliJ / JetBrains
+.idea/
+**/.idea/
 .idea
 .env
 Backend/.idea
+Backend/.idea/*
+Backend/src/main/resources/application-test.yml
+Backend/src/main/resources/application-dev.yml
+Backend/docker-compose.yml
+Backend/HELP.md
+Backend/target
+Backend/.env
+Frontend/.env

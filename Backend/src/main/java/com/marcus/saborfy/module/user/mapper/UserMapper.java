@@ -14,6 +14,6 @@ public interface UserMapper {
     UserResponse entityToUserResponse(User user);
     UserInternalResponse entityToUserInternalResponse(User user);
     default String roleToString(Role role) {
-        return role == null ? null : role.getAuthority();
+        return role == null ? null : String.valueOf(role.getName());
     }
 }
